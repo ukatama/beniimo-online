@@ -1,14 +1,13 @@
-import * as Route from '../actions/RouteActions';
-import * as ROUTE from '../constants/RouteActions';
-import * as ROOM from '../constants/RoomActions';
-import { parse } from '../router/Parser';
+import {CREATED} from '../actions/room';
+import {SET} from '../actions/route';
+import {parse} from '../router/Parser';
 
 const Redirects = {
-    [ROOM.CREATED]: (action) => action.room.id,
+    [CREATE]: (action) => action.room.id,
 };
 
-export const routerMiddleware = ({dispatch}) => (next) => (action) => {
-    if (action.type === ROUTE.SET && !action.route) {
+export default ({dispatch}) => (next) => (action) => {
+    if (action.type === SET && !action.route) {
         const {
             path,
             ...nextAction,

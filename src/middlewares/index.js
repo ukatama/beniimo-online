@@ -1,25 +1,19 @@
-import { debugLoggerMiddleWare } from './DebugLoggerMiddleware';
-import { dice } from './dice';
-import { domMiddleware } from './DOMMiddleware';
-import { confirmMiddleWare } from './ConfirmMiddleware';
-import { characterMiddleWare } from './CharacterMiddleware';
-import { notificationMiddleware } from './NotificationMiddleware';
-import { room } from './RoomMiddleware';
-import { routerMiddleware } from './RouterMiddleware';
-import { socketMiddleware } from './SocketMiddleware';
-import { systemNotificationMiddleware } from './SystemNotificationMiddleware';
-import { timeoutMiddleware } from './TimeoutMiddleware';
+import character from './character';
+import confirm from './confirm';
+import dubugLogger from './debugger';
+import dice from './dice';
+import notification from './notification';
+import router from './router';
+import socket from './socket';
+import toast from './toast';
 
-export const middlewares = [
+export default [
+    character,
+    confirm,
     dice,
-    domMiddleware,
-    confirmMiddleWare,
-    systemNotificationMiddleware,
-    characterMiddleWare,
-    notificationMiddleware,
-    room,
-    routerMiddleware,
-    socketMiddleware,
-    timeoutMiddleware,
+    notification,
+    router,
+    socket,
+    toast,
     debugLoggerMiddleWare,
 ];
