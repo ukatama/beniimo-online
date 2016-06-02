@@ -7,5 +7,5 @@ export const create = createAction(CREATE, (toast) => ({
     id: genId(),
 }));
 
-export const CLOSE = 'TOAST_CLOSE';
-export const close = createAction(CLOSE, (toast) => toast);
+export const REMOVE = 'TOAST_REMOVE';
+export const remove = createAction(REMOVE, (toast) => toast);

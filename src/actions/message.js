@@ -12,4 +12,7 @@ export const FETCH = 'MESSAGE_FETCH';
 export const fetch = createAction(FETCH, (minId = null) => minId, sync);
 
 export const LIST = 'MESSAGE_LIST';
-export const list = createAction(FETCH, (msgs) => msgs);
+export const list = createAction(LIST, (msgs) => msgs);
+
+export const OLD = 'MESSAGE_OLD';
+export const old = createAction(OLD, (msgs) => msgs);

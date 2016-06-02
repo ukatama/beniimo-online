@@ -1,5 +1,5 @@
-import {createAction} from 'readux-actions';
-import {parse} from '../router/Parser';
+import {createAction} from 'redux-actions';
+// import {parse} from '../router/Parser';
 
 export const SET = 'ROUTE_SET';
 export const set = createAction(SET, (path, e = null) => {
@@ -9,7 +9,6 @@ export const set = createAction(SET, (path, e = null) => {
         if (e) e.preventDefault();
 
         return {
-            type: SET,
             path,
         };
     }

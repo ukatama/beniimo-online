@@ -6,8 +6,11 @@ export const CREATE = 'ICON_CREATE';
 export const create = createAction(CREATE, (icon) => icon, sync);
 
 const removeMeta = (message) => () => ({
-    title: 'Delete Icon',
-    message,
+    dialog: {
+        type: 'confirm',
+        title: 'Delete Icon',
+        message,
+    },
     server: true,
 });
 
@@ -15,9 +18,9 @@ export const REMOVE = 'ICON_REMOVE';
 export const remove =
     createAction(REMOVE, (icon) => icon, removeMeta('Delete icon "${name}"'));
 
-export const REMOVE_SELECTED = 'ICON_REMOVE_SELECTED';
-export const removeSelected = createAction(
-    REMOVE_SELECTED,
+export const BULK_REMOVE = 'ICON_BULK_REMOVE';
+export const bulkRemove = createAction(
+    BULK_REMOVE,
     (icons) => icons,
     removeMeta('Delete selected icons')
 );

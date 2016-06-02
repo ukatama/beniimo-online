@@ -13,7 +13,7 @@ export default ({dispatch, getState}) => (next) => (action) => {
         ...meta,
     } = action.meta;
 
-    return next(open({
+    return next(open(dialog.type, {
         ...dialog,
         next: {
             ...action,

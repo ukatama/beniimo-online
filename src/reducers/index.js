@@ -1,32 +1,30 @@
 import { combineReducers } from 'redux';
-import { characters } from './CharacterReducer';
-import { confirmList } from './ConfirmListReducer';
-import { dialog } from './DialogReducer';
-import { dom } from './DOMReducer';
-import { iconListReducer } from './IconListReducer';
-import { inputReducer } from './InputReducer';
-import { messageFormReducer } from './MessageFormReducer';
-import { messageListReducer } from './MessageListReducer';
-import { notifications } from './NotificationReducer';
-import { roomListReducer } from './RoomListReducer';
-import { roomReducer } from './RoomReducer';
-import { routeReducer } from './RouteReducer';
-import { userReducer } from './UserReducer';
-import { users } from './users';
+import characters from './characters.js';
+import dialogs from './dialogs.js';
+import dom from './dom.js';
+import icons from './icons.js';
+import index from './index.js';
+import messages from './messages.js';
+import names from './names.js';
+import room from './room.js';
+import rooms from './rooms.js';
+import route from './route.js';
+import toasts from './toasts.js';
+import typings from './typings.js';
+import users from './users.js';
 
-export const rootReducer = combineReducers({
+export default combineReducers({
     characters,
-    confirmList,
-    dialog,
+    dialogs,
     dom,
-    iconList: iconListReducer,
-    input: inputReducer,
-    messageForm: messageFormReducer,
-    messageList: messageListReducer,
-    notifications,
-    roomList: roomListReducer,
-    room: roomReducer,
-    route: routeReducer,
-    user: userReducer,
+    icons,
+    index,
+    messages,
+    names,
+    room,
+    rooms,
+    route,
+    toasts,
+    typings,
     users,
 });
