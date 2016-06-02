@@ -1,9 +1,14 @@
-import {open, OK} from '../actions/dialog';
+import { open, OK } from '../actions/dialog';
 
-export default ({dispatch, getState}) => (next) => (action) => {
+export default ({ dispatch, getState }) => (next) => (action) => {
     if (action.type === OK) {
-        const dialog = getState().dialogs.find(({id}) => id === action.payload);
-        if (dialog && dialog.next) dispatch(dialog.next);
+        const id = action.payload;
+        const dialog = getState()
+            .dialogs
+            .find((dialog) => dialog.get('id') === id);
+        const next = dialog.get('next');
+
+        dispatch(next);
     }
 
     if (!action.meta || !action.meta.dialog) return next(action);

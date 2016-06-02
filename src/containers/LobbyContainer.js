@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { open } from '../actions/DialogActions';
+import { open } from '../actions/dialog';
 import { Lobby } from '../components/Lobby';
 import { bindActions } from './utility';
 

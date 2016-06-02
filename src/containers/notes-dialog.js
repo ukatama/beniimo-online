@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
-import {getDialog, close} from '../actions/DialogActions';
-import {notesUpdate} from '../actions/RoomActions';
+import {getDialog, close} from '../actions/dialog';
+import {notesUpdate} from '../actions/room';
 import {NotesDialog as Component} from '../components/notes-dialog';
 
 export const NotesDialog = connect(

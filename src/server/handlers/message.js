@@ -1,6 +1,11 @@
-import {roll} from '../../actions/DiceActions';
-import {list, prependList, push} from '../../actions/MessageActions';
-import * as MESSAGE from '../../constants/MessageActions';
+import { roll } from '../../actions/dice';
+import {
+    create,
+    list,
+    old,
+    CREATE,
+    FETCH,
+} from '../../actions/message';
 import {generateId} from '../../utility/id';
 import {File} from '../models/file';
 import {Message} from '../models/message';
@@ -24,7 +29,7 @@ const processFile = (client, action) => {
 
 export const message = (client) => (next) => (action) => {
     switch (action.type) {
-        case MESSAGE.CREATE: {
+        case CREATE: {
             processFile(client, action)
                 .then((file_id) => diceReplace(`${action.message || ''}`)
                     .then((diceMessage) => ({
@@ -51,28 +56,29 @@ export const message = (client) => (next) => (action) => {
                         client.publish(roll(...dice));
                     });
 
-                    client.emit(push(message));
-                    client.publish(push(message), message.whisper_to);
+                    client.emit(create(message));
+                    client.publish(create(message), message.whisper_to);
                     client.touch();
                 })
                 .catch((e) => client.logger.error(e));
             break;
         }
-        case MESSAGE.FETCH:
-            Message
-                .findLimit(client.room.id, client.user.id)
-                .then((messages) => client.emit(list(messages)))
-                .catch((e) => client.logger.error(e));
-            break;
-        case MESSAGE.REQUEST_PAST:
-             Message
-                .findLimit(
-                    client.room.id,
-                    client.user.id,
-                    'id','<', action.lastId
-                )
-                .then((messages) => client.emit(prependList(messages)))
-                .catch((e) => client.logger.error(e));
+        case FETCH:
+            if (!action.payload) {
+                Message
+                    .findLimit(client.room.id, client.user.id)
+                    .then((messages) => client.emit(list(messages)))
+                    .catch((e) => client.logger.error(e));
+            } else {
+                Message
+                    .findLimit(
+                        client.room.id,
+                        client.user.id,
+                        'id','<', action.lastId
+                    )
+                    .then((messages) => client.emit(old(messages)))
+                    .catch((e) => client.logger.error(e));
+            }
             break;
     }
 

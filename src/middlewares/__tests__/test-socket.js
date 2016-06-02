@@ -3,9 +3,7 @@ describe('middlewares', () => {
         const socket = {
             emit: jest.fn(),
         };
-        jest.setMock('../../borwser/socket', () => ({
-            default: socket,
-        }));
+        jest.setMock('../../browser/socket', socket);
 
         jest.unmock('../socket');
         const middleware = require('../socket').default;

@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {open} from '../actions/DialogActions';
+import {open} from '../actions/dialog';
 import {Notes as Component} from '../components/notes';
 
 export const Notes = connect(

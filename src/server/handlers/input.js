@@ -1,10 +1,14 @@
-import * as Input from '../../actions/InputActions';
-import * as INPUT from '../../constants/InputActions';
+import {
+    begin,
+    end,
+    BEGIN,
+    END,
+} from '../../actions/typing';
 
 export const input = (client) => (next) => (action) => {
     switch (action.type) {
-        case INPUT.BEGIN: {
-            client.publish(Input.began({
+        case BEGIN: {
+            client.publish(begin({
                 id: client.socket.id,
                 user_id: client.user.id,
                 name: action.name,
@@ -13,8 +17,8 @@ export const input = (client) => (next) => (action) => {
             client.touch();
             break;
         }
-        case INPUT.END: {
-            client.publish(Input.ended({
+        case END: {
+            client.publish(end({
                 id: client.socket.id,
                 user_id: client.user.id,
                 name: action.name,

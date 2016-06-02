@@ -6,21 +6,21 @@ describe('middlewares', () => {
         const {genId} = require('../../utility/id');
 
         jest.unmock('../../actions/toast');
-        const {create, close} = require('../../actions/toast');
+        const { create, remove } = require('../../actions/toast');
 
         jest.unmock('../toast');
-        const middleware = require('../toast');
+        const middleware = require('../toast').default;
 
         it('closes after duration', () => {
             genId.mockReturnValue('id');
 
             const dispatch = jest.fn();
             const next = jest.fn();
-            const action = open({
+            const action = create({
                 duration: 3000,
             });
 
-            middleware({dispatch})(next)(action);
+            middleware({ dispatch })(next)(action);
 
             expect(dispatch).not.toBeCalled();
             expect(next).toBeCalledWith(action);
@@ -29,7 +29,7 @@ describe('middlewares', () => {
 
             setTimeout.mock.calls[0][0]();
 
-            expect(dispatch).toBeCalledWith(close(action.payload.id));
+            expect(dispatch).toBeCalledWith(remove(action.payload.id));
         });
 
         it('creates toast from meta', () => {

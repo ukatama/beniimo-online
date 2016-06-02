@@ -1,9 +1,9 @@
 import io from 'socket.io-client';
-import * as Socket from '../actions/SocketActions';
-import { AppStore } from '../stores/AppStore';
+import { connect, disconnect } from '../actions/socket';
+import Store from './store';
 
 export const socket = io.connect();
 
-socket.on('connect', () => AppStore.dispatch(Socket.connect()));
-socket.on('disconnect', () => AppStore.dispatch(Socket.disconnect()));
-socket.on('action', (action) => AppStore.dispatch(action));
+socket.on('connect', () => Store.dispatch(connect()));
+socket.on('disconnect', () => Store.dispatch(disconnect()));
+socket.on('action', (action) => Store.dispatch(action));

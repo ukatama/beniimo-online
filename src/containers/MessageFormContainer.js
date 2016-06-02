@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
 import {
     open as openDialog,
-} from '../actions/DialogActions';
+} from '../actions/dialog';
 import {
     begin as beginInput,
     end as endInput,
-} from '../actions/InputActions';
-import {create as createMessage} from '../actions/MessageActions';
+} from '../actions/typing';
+import {create as createMessage} from '../actions/message';
 import {
     create as createForm,
     remove as removeForm,
     appendFile,
-} from '../actions/MessageFormActions';
+} from '../actions/name';
 import {MessageForm} from '../components/MessageForm';
 import {bindActions} from './utility';
 import {readAsBlob} from '../browser/file';

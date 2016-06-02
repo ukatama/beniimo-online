@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { get as getCharacter } from '../actions/CharacterActions';
+import { get as getCharacter } from '../actions/character';
 import {
     CharacterLinkButton as Component,
 } from '../components/CharacterLinkButton';

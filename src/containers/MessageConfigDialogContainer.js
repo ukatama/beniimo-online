@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import { get as onCharacterRequested } from '../actions/CharacterActions';
-import { getDialog, close, open } from '../actions/DialogActions';
+import { get as onCharacterRequested } from '../actions/character';
+import { getDialog, close, open } from '../actions/dialog';
 import {
     create as createIcon,
     fetch as fetchIcon,
     remove as removeIcon,
-} from '../actions/IconActions';
-import { update as updateForm } from '../actions/MessageFormActions';
-import { notify as onNotify } from '../actions/NotificationActions';
+} from '../actions/icon';
+import { update as updateForm } from '../actions/name';
+import { create as onNotify } from '../actions/toast';
 import { MessageConfigDialog } from '../components/MessageConfigDialog';
 import { bindActions } from './utility';
 

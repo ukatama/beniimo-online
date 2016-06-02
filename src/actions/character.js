@@ -1,10 +1,8 @@
-import {createAction} from 'redux-actions';
+import { createAction } from 'redux-actions';
+import { get as getCharacter } from '../browser/character';
 
 export const GET = 'CHARACTER_GET';
-export const get = createAction(GET, (url) => url);
-
-export const SET = 'CHARACTER_SET';
-export const set = createAction(SET, (url, data) => ({url, data}));
+export const get = createAction(GET, (url) => getCharacter(url));
 
 export const REMOVE = 'CHARACTER_REMOVE';
 export const remove = createAction(REMOVE);

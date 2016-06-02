@@ -1,7 +1,7 @@
 import socket from '../browser/socket';
-import {set as setRoute, CONNECT} from '../actions/route';
+import { set as setRoute, CONNECT } from '../actions/route';
 
-export default ({dispatch}) => (next) => (action) => {
+export default ({ dispatch }) => (next) => (action) => {
     if (action.meta && action.meta.server) socket.emit('action', action);
 
     if (action.type === CONNECT) {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { getDialog, close } from '../actions/DialogActions';
-import { update as onUpdate } from '../actions/RoomActions';
+import { getDialog, close } from '../actions/dialog';
+import { update as onUpdate } from '../actions/room';
 import { RoomUpdateDialog } from '../components/RoomUpdateDialog';
 import { bindActions } from './utility';
 

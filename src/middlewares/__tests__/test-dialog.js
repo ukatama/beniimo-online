@@ -3,8 +3,13 @@ describe('middlewares', () => {
         jest.unmock('redux-actions');
         jest.unmock('redux-actions/lib/createAction');
 
+        const { genId } = require('../../utility/id');
+
+        jest.unmock('immutable');
+        const { List, Map } = require('immutable');
+
         jest.unmock('../../actions/dialog');
-        const {OPEN, ok} = require('../../actions/dialog');
+        const { OPEN, ok } = require('../../actions/dialog');
 
         jest.unmock('../dialog');
         const middleware = require('../dialog').default;
@@ -16,7 +21,7 @@ describe('middlewares', () => {
                 type: 'ANY_ACTION',
                 payload: {some: 'data'},
                 meta: {
-                    confirm: {
+                    dialog: {
                         type: 'confirm',
                         title: 'test confirm',
                         message: 'message',
@@ -25,17 +30,21 @@ describe('middlewares', () => {
                 },
             };
 
-            middleware({dispatch})(next)(action);
-    
+            genId.mockReturnValueOnce(1);
+
+            middleware({ dispatch })(next)(action);
+
             expect(next.mock.calls).toEqual([[{
                 type: OPEN,
                 payload: {
+                    id: 1,
                     title: 'test confirm',
+                    type: 'confirm',
                     message: 'message',
                     next: {
                         type: 'ANY_ACTION',
-                        payload: {some: 'data'},
-                        meta: {another: 'meta'},
+                        payload: { some: 'data' },
+                        meta: { another: 'meta' },
                     },
                 },
             }]]);
@@ -45,26 +54,26 @@ describe('middlewares', () => {
         it('dispatches next action by OK', () => {
             const nextAction = {
                 type: 'NEXT_ACTION',
-                payload: {some: 'data'},
-                meta: {meta: 'data'},
+                payload: { some: 'data' },
+                meta: { meta: 'data' },
             };
             const dispatch = jest.fn();
             const getState = jest.fn().mockReturnValue({
-                dialog: [
-                    {
+                dialogs: new List([
+                    new Map({
                         id: 'another-id',
                         next: {},
-                    },
-                    {
+                    }),
+                    new Map({
                         id: 'id',
                         next: nextAction,
-                    },
-                ],
+                    }),
+                ]),
             });
             const next = jest.fn();
             const action = ok('id');
 
-            middleware({dispatch, getState})(next)(action);
+            middleware({ dispatch, getState })(next)(action);
 
             expect(next.mock.calls).toEqual([[action]]);
             expect(dispatch.mock.calls).toEqual([[nextAction]]);

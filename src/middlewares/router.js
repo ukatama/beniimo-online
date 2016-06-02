@@ -1,9 +1,9 @@
-import {CREATED} from '../actions/room';
-import {SET} from '../actions/route';
-import {parse} from '../router/Parser';
+import { CREATE } from '../actions/room';
+import { set, SET } from '../actions/route';
+import { parse } from '../router/Parser';
 
 const Redirects = {
-    [CREATE]: (action) => action.room.id,
+    [ CREATE ]: (action) => action.room.id,
 };
 
 export default ({dispatch}) => (next) => (action) => {
@@ -30,7 +30,7 @@ export default ({dispatch}) => (next) => (action) => {
         });
     } else if (action.type in Redirects) {
         setTimeout(
-            () => dispatch(Route.set(Redirects[action.type](action)))
+            () => dispatch(set(Redirects[action.type](action)))
         );
     }
 

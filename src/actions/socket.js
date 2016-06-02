@@ -1,4 +1,4 @@
-import {createAction} from 'redux-actions';
+import { createAction } from 'redux-actions';
 
 export const CONNECT = 'SOCKET_CONNECT';
 export const connect = createAction(CONNECT);

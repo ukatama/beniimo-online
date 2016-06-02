@@ -6,9 +6,7 @@ describe('middlewares', () => {
         const dice3d = require('dice3d');
 
         jest.setMock('../../browser/config', {
-            default: {
-                diceLimit: 20,
-            },
+            diceLimit: 20,
         });
 
         jest.unmock('../../actions/dice');

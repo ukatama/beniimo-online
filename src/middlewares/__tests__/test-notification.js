@@ -1,6 +1,11 @@
 describe('middlewares', () => {
     describe('notification', () => {
-        const {notify} = require('../../browser/notification');
+        jest.unmock('immutable');
+        const { Map } = require('immutable');
+
+        const { notify } = require('../../browser/notification');
+        const close = jest.fn();
+        notify.mockReturnValue(Promise.resolve({ close }));
 
         jest.unmock('../notification');
         const middleware = require('../notification').default;
@@ -8,17 +13,17 @@ describe('middlewares', () => {
         it('ignore actions without meta', () => {
             const getState = jest.fn();
             const next = jest.fn();
-            const action = {type: 'TEST'};
+            const action = { type: 'TEST' };
 
-            middleware({getState})(next)(action);
+            middleware({ getState })(next)(action);
 
             expect(getState).not.toBeCalled();
-            expect(next.mock.calls).toBe([[action]]);
+            expect(next.mock.calls).toEqual([[action]]);
         });
 
         it('notifies meta.notify', () => {
             const getState = jest.fn().mockReturnValue({
-                dom: {focused: true},
+                dom: new Map({ focused: false }),
                 title: 'foobar',
             });
             const next = jest.fn();
@@ -35,18 +40,18 @@ describe('middlewares', () => {
                 },
             };
 
-            middleware({getState})(next)(action);
+            middleware({ getState })(next)(action);
 
-            expect(notify.mock.calls).toBe([[{
+            expect(notify.mock.calls).toEqual([[{
                 title: 'foobar',
                 body: 'Message with data: 1234',
             }]]);
-            expect(next.mock.calls).toBe([[action]]);
+            expect(next.mock.calls).toEqual([[action]]);
         });
 
         it('ignore actions if window is not focused', () => {
             const getState = jest.fn().mockReturnValue({
-                dom: {focused: false},
+                dom: new Map({ focused: true }),
             });
             const next = jest.fn();
             const action = {
@@ -62,10 +67,11 @@ describe('middlewares', () => {
                 },
             };
 
-            middleware({getState})(next)(action);
+            notify.mockClear();
+            middleware({ getState })(next)(action);
 
-            expect(notify.mock.calls).not.toBeCalled();
-            expect(next.mock.calls).toBe([[action]]);
+            expect(notify).not.toBeCalled();
+            expect(next.mock.calls).toEqual([[action]]);
         });
     });
 });

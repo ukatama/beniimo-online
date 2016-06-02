@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { getDialog, close } from '../actions/DialogActions';
-import { create } from '../actions/RoomActions';
+import { getDialog, close } from '../actions/dialog';
+import { create } from '../actions/room';
 import { RoomCreateDialog } from '../components/RoomCreateDialog';
 import { bindActions } from './utility';
 

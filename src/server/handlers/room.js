@@ -1,7 +1,10 @@
 import _ from 'lodash';
-import {create, fetch as fetchMessage} from '../../actions/MessageActions';
 import {
-    created,
+    create as createMessage,
+    fetch as fetchMessage,
+} from '../../actions/message';
+import {
+    create,
     fetch,
     updated,
     joined,
@@ -10,8 +13,15 @@ import {
     userLeft,
     userJoined,
     userList,
-} from '../../actions/RoomActions';
-import * as ROOM from '../../constants/RoomActions';
+    CREATE,
+    JOIN,
+    LEAVE,
+    FETCH,
+    REMOVE,
+    UPDATE,
+    FETCH_USER,
+    NOTES_UPDATE,
+} from '../../actions/room';
 import {PASSWORD_INCORRECT, Room} from '../models/room';
 import {generateId} from '../../utility/id';
 
@@ -19,7 +29,7 @@ const ID_LENGTH = 16;
 
 export const room = (client) => (next) => (action) => {
     switch (action.type) {
-        case ROOM.CREATE:
+        case CREATE:
             Room
                 .insert({
                     id: generateId((new Date()).getTime() + '')
@@ -28,10 +38,10 @@ export const room = (client) => (next) => (action) => {
                     password: action.password || null,
                     user_id: client.user.id || null,
                 })
-                .then((room) => client.emit(created(room)))
+                .then((room) => client.emit(create(room)))
                 .catch((e) => client.logger.error(e));
             break;
-        case ROOM.JOIN:
+        case JOIN:
             Room
                 .join(action.id, action.password || null)
                 .then((room) => {
@@ -49,18 +59,18 @@ export const room = (client) => (next) => (action) => {
                 })
                 .catch((e) => client.logger.error(e));
             break;
-        case ROOM.LEAVE:
+        case LEAVE:
             client.dispatch(fetch());
             client.publish(userLeft(client.user));
             client.leave();
             break;
-        case ROOM.FETCH:
+        case FETCH:
             Room
                 .findAll()
                 .then((rooms) => client.emit(list(rooms)))
                 .catch((e) => client.logger.error(e));
             break;
-        case ROOM.REMOVE:
+        case REMOVE:
             Room
                 .del({
                     id: action.id || null,
@@ -69,7 +79,7 @@ export const room = (client) => (next) => (action) => {
                 .then(() => {})
                 .catch((e) => client.logger.error(e));
             break;
-        case ROOM.UPDATE:
+        case UPDATE:
             Room
                 .update(
                     client.room.id,
@@ -85,7 +95,7 @@ export const room = (client) => (next) => (action) => {
                 })
                 .catch((e) => client.logger.error(e));
             break;
-        case ROOM.FETCH_USER:
+        case FETCH_USER:
             if (!client.room) break;
 
             client.redis.hgetall(`${client.room_key}:users`, (err, obj) => {
@@ -105,7 +115,7 @@ export const room = (client) => (next) => (action) => {
             });
             break;
 
-        case ROOM.NOTES_UPDATE:
+        case NOTES_UPDATE:
             if (!client.room) break;
 
             Room
@@ -119,7 +129,7 @@ export const room = (client) => (next) => (action) => {
                     client.emit(updated(room));
                     client.publish(updated(room));
 
-                    client.dispatch(create({
+                    client.dispatch(createMessage({
                         name: 'NOTES',
                         message: JSON.stringify(room.notes
                             .split(/\r\n|\n/)

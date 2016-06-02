@@ -2,9 +2,11 @@ describe('reducers', () => {
     describe('character', () => {
         jest.autoMockOff();
 
+        jest.mock('../../browser/character');
+        const character = require('../../browser/character');
         const { Map } = require('immutable');
 
-        const { set } = require('../../actions/character');
+        const { get } = require('../../actions/character');
         const reducer = require('../characters').default;
 
         let state;
@@ -14,10 +16,15 @@ describe('reducers', () => {
             expect(state).isEmpty();
         });
 
-        it('sets character with url', () => {
+        it('gets character from url', () => {
             const data = { data: 'data' };
 
-            state = reducer(state, set('url', data));
+            character.get.mockReturnValue({
+                url: 'url',
+                data,
+            });
+
+            state = reducer(state, get('url'));
 
             expect(state).toEqualImmutable(new Map({
                 url: data,

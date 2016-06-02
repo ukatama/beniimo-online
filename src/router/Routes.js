@@ -1,4 +1,4 @@
-import { join, leave } from '../actions/RoomActions';
+import { join, leave } from '../actions/room';
 
 export const Routes = [
     {

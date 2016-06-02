@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { close, getDialog } from '../actions/DialogActions';
-import { join } from '../actions/RoomActions';
-import { set as setRoute } from '../actions/RouteActions';
+import { close, getDialog } from '../actions/dialog';
+import { join } from '../actions/room';
+import { set as setRoute } from '../actions/route';
 import {
     RoomPasswordDialog as Component,
 } from '../components/RoomPasswordDialog';

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import { open } from '../actions/DialogActions';
+import { open } from '../actions/dialog';
 import {
     leave, fetch,
     create as createRoom,
     remove as removeRoom,
-} from '../actions/RoomActions';
-import { set as setRoute } from '../actions/RouteActions';
+} from '../actions/room';
+import { set as setRoute } from '../actions/route';
 import { RoomList } from '../components/RoomList';
 import { bindActions } from './utility';
 

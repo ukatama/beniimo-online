@@ -1,11 +1,16 @@
-import {push} from '../../actions/IconActions';
-import * as ICON from '../../constants/IconActions';
-import {generateId} from '../../utility/id';
-import {Icon} from '../models/icon';
+import {
+    push,
+    CREATE,
+    FETCH,
+    REMOVE,
+    BULK_REMOVE,
+} from '../../actions/icon';
+import { generateId } from '../../utility/id';
+import { Icon } from '../models/icon';
 
 export const icon = (client) => (next) => (action) => {
     switch (action.type) {
-        case ICON.CREATE: {
+        case CREATE: {
             const id = generateId([
                 client.user.id,
                 action.name,
@@ -25,13 +30,13 @@ export const icon = (client) => (next) => (action) => {
                 .catch((e) => client.logger.error(e));
             break;
         }
-        case ICON.FETCH:
+        case FETCH:
             Icon
                 .findAll('user_id', client.user.id)
                 .then((icons) => client.emit(push(icons)))
                 .catch((e) => client.logger.error(e));
             break;
-        case ICON.REMOVE:
+        case REMOVE:
             Icon
                 .del({
                     id: action.id,
@@ -40,7 +45,7 @@ export const icon = (client) => (next) => (action) => {
                 .then(() => action.id)
                 .catch((e) => client.logger.error(e));
             break;
-        case ICON.REMOVE_SELECTED:
+        case BULK_REMOVE:
             action
                 .icons
                 .forEach(({id}) => {

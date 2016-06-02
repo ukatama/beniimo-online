@@ -1,16 +1,16 @@
-import {template, transform} from 'lodash';
-import {notify} from '../browser/notification';
+import { template, transform } from 'lodash';
+import { notify } from '../browser/notification';
 
-export default ({getState}) => (next) => (action) => {
+export default ({ getState }) => (next) => (action) => {
     if (!action.meta || !action.meta.notify) return next(action);
 
     const state = getState();
-    if (state.dom.focused) return next(action);
+    if (state.dom.get('focused')) return next(action);
 
     const message = transform(
         action.meta.notify,
         (result, value, key) => {
-            result[ley] = template(value)({action, state});
+            result[key] = template(value)({ action, state });
         },
         {}
     );
@@ -20,5 +20,4 @@ export default ({getState}) => (next) => (action) => {
     );
 
     return next(action);
-
 };
