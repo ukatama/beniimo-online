@@ -3,6 +3,11 @@ describe('router', () => {
     jest.dontMock('redux');
     jest.dontMock('../router');
 
+    jest.setMock('../../browser/user', {
+        id: 'user',
+        name: 'User',
+    });
+
     window.localStorage = {
         getItem: jest.fn(),
     };

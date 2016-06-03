@@ -10,8 +10,8 @@ export default ({dispatch}) => (next) => (action) => {
     if (action.type === SET && !action.route) {
         const {
             path,
-            ...nextAction,
-        } = action;
+            ...payload,
+        } = action.payload;
         const abs = (path.charAt(0) === '/')
             ? path
             : `/${path}`;
@@ -25,8 +25,11 @@ export default ({dispatch}) => (next) => (action) => {
         if (route.onEnter) route.onEnter(dispatch)(route.params);
 
         return next({
-            ...nextAction,
-            route,
+            ...action,
+            payload: {
+                ...payload,
+                route,
+            },
         });
     } else if (action.type in Redirects) {
         setTimeout(

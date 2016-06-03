@@ -15,7 +15,7 @@ describe('middlewares', () => {
                 payload: 'payload',
                 meta: {
                     oter: 'meta',
-                    server: true,
+                    sync: true,
                 },
             };
 

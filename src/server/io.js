@@ -36,5 +36,4 @@ io.on('connect', (socket) => {
     });
 
     socket.emit('hello', socket.user);
-    conn.emit(loggedin(socket.user));
 });

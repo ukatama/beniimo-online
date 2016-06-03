@@ -1,3 +1,4 @@
+import { Iterable } from 'immutable';
 import createLogger from 'redux-logger';
 import dialog from './dialog';
 import dice from './dice';
@@ -16,7 +17,16 @@ const middlewares = [
 ];
 
 if (localStorage.getItem('nekochat.debug')) {
-    middlewares.push(createLogger());
+    middlewares.push(createLogger({
+        stateTransformer:
+            (state) => Object.keys(state).reduce((result, key) => {
+                const value = state[key];
+                result[key] =
+                    Iterable.isIterable(value) ? value.toJS() : value;
+
+                return result;
+            }, {}),
+    }));
 }
 
 export default middlewares;

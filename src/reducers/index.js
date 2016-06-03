@@ -1,24 +1,25 @@
+import { Map } from 'immutable';
 import { combineReducers } from 'redux';
-import characters from './characters.js';
-import dialogs from './dialogs.js';
-import dom from './dom.js';
-import icons from './icons.js';
-import index from './index.js';
-import messages from './messages.js';
-import names from './names.js';
-import room from './room.js';
-import rooms from './rooms.js';
-import route from './route.js';
-import toasts from './toasts.js';
-import typings from './typings.js';
-import users from './users.js';
+import User from '../browser/user';
+import characters from './characters';
+import dialogs from './dialogs';
+import dom from './dom';
+import icons from './icons';
+import immutable from './immutable';
+import messages from './messages';
+import names from './names';
+import room from './room';
+import rooms from './rooms';
+import route from './route';
+import toasts from './toasts';
+import typings from './typings';
+import users from './users';
 
 export default combineReducers({
     characters,
     dialogs,
     dom,
     icons,
-    index,
     messages,
     names,
     room,
@@ -26,5 +27,6 @@ export default combineReducers({
     route,
     toasts,
     typings,
+    user: immutable(new Map(User)),
     users,
 });

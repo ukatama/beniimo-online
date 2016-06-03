@@ -1,9 +1,12 @@
-import { join, leave } from '../actions/room';
+import { join, leave, fetch } from '../actions/room';
 
 export const Routes = [
     {
         path: '/', route: 'lobby',
-        onEnter: (dispatch) => () => dispatch(leave()),
+        onEnter: (dispatch) => () => {
+            dispatch(leave());
+            dispatch(fetch());
+        },
     },
     {
         path: '/guest', route: 'guest',

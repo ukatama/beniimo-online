@@ -5,6 +5,10 @@ describe('socket', () => {
         on: jest.fn(),
     };
 
+    jest.setMock('../../browser/user', {
+        id: 'user',
+        name: 'User',
+    });
     jest.setMock('socket.io-client', {
         connect: jest.fn().mockReturnValue(socket),
     });

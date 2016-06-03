@@ -1,9 +1,9 @@
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import React, { PropTypes } from 'react';
-import { RoomListContainer } from '../containers/RoomListContainer';
+import RoomList from '../containers/RoomList';
 
-export const Lobby = ({open}) => {
+const Lobby = ({ onCreateRoom }) => {
     document.title = "Nekochat";
 
     const Style = {
@@ -30,7 +30,7 @@ export const Lobby = ({open}) => {
                 iconElementRight={
                     <IconButton
                         iconClassName="material-icons"
-                        onTouchTap={() => open('room-create')}
+                        onTouchTap={() => onCreateRoom()}
                     >
                         add
                     </IconButton>
@@ -38,10 +38,11 @@ export const Lobby = ({open}) => {
                 title="Nekochat"
             />
             <div id="notification-anchor" />
-            <RoomListContainer style={Style.RoomList} />
+            <RoomList style={Style.RoomList} />
         </div>
     );
 };
 Lobby.propTypes = {
-    open: PropTypes.func.isRequired,
+    onCreateRoom: PropTypes.func.isRequired,
 };
+export default Lobby;

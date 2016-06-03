@@ -1,58 +1,41 @@
-import {List} from 'material-ui/List';
+import { List } from 'material-ui/List';
+import IPropTypes from 'react-immutable-proptypes';
 import { zip } from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import { RoomListItem } from './RoomListItem';
+import RoomListItem from './RoomListItem';
+import { pureRender } from '../utility/enhancer';
 
-export class RoomList extends Component {
-    static get propTypes() {
-        return {
-            rooms: PropTypes.arrayOf(PropTypes.shape({
-                id: PropTypes.string.isRequired,
-            })).isRequired,
-            user: PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                name: PropTypes.string.isRequired,
-            }).isRequired,
-            removeRoom: PropTypes.func.isRequired,
-            setRoute: PropTypes.func.isRequired,
-        };
-    }
+const RoomList = (props) => {
+    const {
+        rooms,
+        user,
+        onRemoveRoom,
+        onRoute,
+        ...others,
+    } = props;
 
-    shouldComponentUpdate(nextProps) {
-        const {
-            rooms,
-        } = this.props;
-
-        return rooms.length !== nextProps.rooms.length ||
-            zip(rooms, nextProps.rooms).some(([room, next]) =>
-                !room && next ||
-                    room.modified !== next.modified
-            );
-    }
-
-    render() {
-        const {
-            user,
-            rooms,
-            removeRoom,
-            setRoute,
-            ...otherProps,
-        } = this.props;
-
-        return (
-            <List {...otherProps}>
-                {
-                    rooms.map((room) =>
-                        <RoomListItem
-                            key={room.id}
-                            removeRoom={removeRoom}
-                            room={room}
-                            setRoute={setRoute}
-                            user={user}
-                        />
-                    )
-                }
-            </List>
-        );
-    }
-}
+    return (
+        <List {...others}>
+            {
+                rooms.map((room) =>
+                    <RoomListItem
+                        key={room.get('id')}
+                        room={room}
+                        user={user}
+                        onRemoveRoom={onRemoveRoom}
+                        onRoute={onRoute}
+                    />
+                )
+            }
+        </List>
+    );
+};
+RoomList.propTypes = {
+    rooms: IPropTypes.listOf(IPropTypes.contains({
+        id: PropTypes.string.isRequired,
+    })).isRequired,
+    user: IPropTypes.contains().isRequired,
+    onRemoveRoom: PropTypes.func.isRequired,
+    onRoute: PropTypes.func.isRequired,
+};
+export default pureRender(RoomList);

@@ -1,182 +1,55 @@
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
-import {ListItem} from 'material-ui/List';
+import { ListItem } from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
-import { findDOMNode } from 'react-dom';
 import React, { Component, PropTypes } from 'react';
+import IPropTypes from 'react-immutable-proptypes';
+import { findDOMNode } from 'react-dom';
+import RoomActionMenu from './RoomActionMenu';
+import RoomStatusIcons from './RoomStatusIcons';
 import { Timestamp } from './Timestamp';
+import { pureRender } from '../utility/enhancer';
 
-const DialogFeatures = {
-    width: 360,
-    height: 640,
-    resizabe: true,
-    scrollbars: true,
+const RoomListItem = (props) => {
+    const {
+        room,
+        user,
+        onRoute,
+        onRemoveRoom,
+    } = props;
+
+    const path = `/${room.get('id')}`;
+
+    return (
+        <ListItem
+            href={path}
+            leftIcon={<RoomStatusIcons room={room} />}
+            primaryText={room.get('title')}
+            rightIconButton={<RoomActionMenu {...props} />}
+            secondaryText={
+                <span>
+                    @{room.get('user_id')}
+                    &nbsp;
+                    <Timestamp timestamp={room.modified} />
+                </span>
+            }
+            onTouchTap={(e) => onRoute(e, path)}
+        />
+    );
 };
-const DialogFeatureString = Object.keys(DialogFeatures)
-    .map((key) => ({key, value: DialogFeatures[key]}))
-    .map((a) => `${a.key}=${a.value === true ? 'yes' : a.value}`);
-
-export class RoomListItem extends Component {
-    static get propTypes() {
-        return {
-            room: PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                title: PropTypes.string.isRequired,
-                user_id: PropTypes.string.isRequired,
-                modified: PropTypes.string.isRequired,
-            }).isRequired,
-            user: PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                name: PropTypes.string.isRequired,
-            }).isRequired,
-            setRoute: PropTypes.func.isRequired,
-            removeRoom: PropTypes.func.isRequired,
-        };
-    }
-
-    shouldComponentUpdate(nextProps) {
-        const {
-            room,
-        } = this.props;
-
-        return room.modified !== nextProps.room.modified;
-    }
-
-    render() {
-        const {
-            room,
-            user,
-            setRoute,
-            removeRoom,
-        } = this.props;
-
-        const path = `/${room.id}`;
-
-        const MenuItemStyle = {
-            display: 'flex',
-            alignItems: 'center',
-        };
-        const CloseItemStyle = {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 48,
-        };
-
-        const rightIconMenu = (
-            <IconMenu
-                iconButtonElement={
-                    <IconButton iconClassName="material-icons">
-                        more_vert
-                    </IconButton>
-                }
-                ref={(c) => c && (this.menu = c)}
-            >
-                <MenuItem
-                    href={path}
-                    onTouchTap={(e) => setRoute(path, e)}
-                >
-                    <div style={MenuItemStyle}>
-                        <FontIcon className="material-icons">
-                            open_in_browser
-                        </FontIcon>
-                        &nbsp;
-                        Join
-                    </div>
-                </MenuItem>
-                <MenuItem
-                    style={MenuItemStyle}
-                    onTouchTap={() => window.open(
-                        path,
-                        room.id,
-                        DialogFeatureString
-                    )}
-                >
-                    <div style={MenuItemStyle}>
-                        <FontIcon className="material-icons">
-                            open_in_new
-                        </FontIcon>
-                        &nbsp;
-                        Popup
-                    </div>
-                </MenuItem>
-                <MenuItem
-                    href={`/view/${room.id}`}
-                    target="_blank"
-                >
-                    <div style={MenuItemStyle}>
-                        <FontIcon className="material-icons">
-                             view_headline
-                        </FontIcon>
-                        &nbsp;
-                        Text View
-                    </div>
-                </MenuItem>
-                <MenuItem
-                    disabled={room.user_id !== user.id}
-                    style={MenuItemStyle}
-                    onTouchTap={() => removeRoom(room)}
-                >
-                    <div style={MenuItemStyle}>
-                        <FontIcon className="material-icons">
-                            delete
-                        </FontIcon>
-                        &nbsp;
-                        Delete
-                    </div>
-                </MenuItem>
-                <MenuItem>
-                    <div style={CloseItemStyle}>
-                        <FontIcon className="material-icons">
-                            keyboard_arrow_up
-                        </FontIcon>
-                    </div>
-                </MenuItem>
-            </IconMenu>
-        );
-
-        const leftIcons = [];
-        if (room.password) {
-            leftIcons.push(
-                <FontIcon className="material-icons" key="password">
-                    lock
-                </FontIcon>
-            );
-        }
-        if (room.state === "close") {
-            leftIcons.push(
-                <FontIcon className="material-icons" key="close">
-                    block
-                </FontIcon>
-            );
-        }
-
-        const leftIcon = leftIcons.length === 0
-            ? null
-            : <div style={{width: leftIcons.length * 24}}>{leftIcons}</div>;
-
-        return (
-            <ListItem
-                href={path}
-                leftIcon={leftIcon}
-                primaryText={room.title}
-                rightIconButton={rightIconMenu}
-                secondaryText={
-                    <span>
-                        @{room.user_id}
-                        &nbsp;
-                        <Timestamp timestamp={room.modified} />
-                    </span>
-                }
-                onClick={(e) => {
-                    const menuButton = findDOMNode(this.menu).children[0];
-                    if (menuButton && menuButton.contains(e.target)) {
-                        e.preventDefault();
-                    }
-                }}
-                onTouchTap={(e) => setRoute(path, e)}
-            />
-        );
-    }
-}
+RoomListItem.propTypes = {
+    room: IPropTypes.contains({
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        user_id: PropTypes.string.isRequired,
+        modified: PropTypes.string.isRequired,
+    }).isRequired,
+    user: IPropTypes.contains({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+    }).isRequired,
+    onRemoveRoom: PropTypes.func.isRequired,
+    onRoute: PropTypes.func.isRequired,
+};
+export default pureRender(RoomListItem);
