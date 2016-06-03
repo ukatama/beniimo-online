@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 /**
  * Pure render enhancer
- * @param{Component} Component - Component
+ * @param{Component} ComposedComponent - Component to compose
  * @returns{Component} Wrapped comopnent
  */
-export function pureRender(Component) {
-    return class PureWrapper extends React.Component {
+export function pureRender(ComposedComponent) {
+    return class PureRenferWrapper extends Component {
+        static get displayName() {
+            return `PureRenferWrapper@${ComposedComponent.displayName}`;
+        }
+
+        static get propTypes() {
+            return ComposedComponent.propTypes;
+        }
+
         shouldComponentUpdate(...args) {
             return PureRenderMixin.shouldComponentUpdate.call(this, ...args);
         }
 
         render() {
-            return <Component {...this.props} />;
+            return <ComposedComponent {...this.props} />;
         }
     };
 }

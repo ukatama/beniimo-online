@@ -1,1 +1,1 @@
-export default JSON.parse(document.body.getAttribute('data-user'));
+export default JSON.parse(document.body.getAttribute('data-user')) || {};

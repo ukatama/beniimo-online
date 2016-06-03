@@ -11,11 +11,10 @@ const RoomList = (props) => {
         user,
         onRemoveRoom,
         onRoute,
-        ...others,
     } = props;
 
     return (
-        <List {...others}>
+        <ul>
             {
                 rooms.map((room) =>
                     <RoomListItem
@@ -27,7 +26,7 @@ const RoomList = (props) => {
                     />
                 )
             }
-        </List>
+        </ul>
     );
 };
 RoomList.propTypes = {
