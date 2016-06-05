@@ -27,10 +27,22 @@ export function get(url) {
                 Accept: 'application/json',
             },
         })
-        .then(({ data }) => ({
-            url,
-            data,
-        }))
+        .then(
+            ({ data }) =>
+                typeof(data) === 'object' ? data : Promise.reject(data)
+        )
+        .then((data) => {
+            const link = data.url ? new URL(data.url, url) : url;
+            const name = data.name || null;
+            const icon = data.icon || data.image || data.portrait;
+
+            return {
+                icon,
+                link,
+                name,
+                url,
+            };
+        })
         .then((character) => {
             cache[url].forEach(({ resolve }) => resolve(character));
 
@@ -38,6 +50,7 @@ export function get(url) {
         })
         .catch((e) => {
             cache[url].forEach(({ reject }) => reject(e));
+            cache[url] = null;
 
             return Promise.reject(e);
         });

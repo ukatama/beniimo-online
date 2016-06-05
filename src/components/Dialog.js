@@ -1,32 +1,43 @@
 import IPropTypes from 'react-immutable-proptypes';
 import React, { PropTypes } from 'react';
 import { pureRender } from '../utility/enhancer';
+import NameEditDialog from '../containers/NameEditDialog';
 
-const table = {};
-
-/**
- * Register Component as Dialog type
- * @param{string} type - Type of dialog
- * @param{Component} Component - Component clas
- */
-export function register(type, Component) {
-    table[type] = Component;
-}
+const table = {
+    'name-edit': NameEditDialog,
+};
 
 const Dialog = (props) => {
     const {
-        dialog,
+        dialogs,
+        onClose,
         ...others,
     } = props;
 
-    if (!dialog) return null;
+    const dialog = dialogs.first();
+    const type = dialog && dialog.get('type');
 
-    const Component = table[dialog.get('type')];
+    const elements = Object.keys(table)
+        .map((key) => {
+            const Component = table[key];
+            const open = Boolean(dialog) && dialog.get('type') === key;
 
-    return Component && <Component open dialog={dialog} {...others} />;
+            return (
+                <Component
+                    {...others}
+                    key={key}
+                    dialog={open ? dialog : null}
+                    open={open}
+                    onClose={(e) => dialog && onClose(e, dialog.get('id'))}
+                />
+            );
+        });
+
+    return <div>{elements}</div>;
 };
 Dialog.propTypes = {
     dialog: IPropTypes.contains({
+        id: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
     }),
 };

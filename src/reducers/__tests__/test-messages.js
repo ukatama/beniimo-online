@@ -40,7 +40,7 @@ describe('reducers', () => {
             state = reducer(state, create({
                 id: 2,
                 name: 'n1',
-                message: 'msg2',
+                message: [[{ type: 'TEXT', text: 'msg2' }]],
                 user_id: 'u1',
             }));
             expect(state).toEqualImmutable(fromJS([
@@ -53,7 +53,7 @@ describe('reducers', () => {
                 {
                     id: 2,
                     name: 'n1',
-                    message: 'msg2',
+                    message: [[{ type: 'TEXT', text: 'msg2' }]],
                     user_id: 'u1',
                 },
             ]));

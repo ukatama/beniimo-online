@@ -9,7 +9,7 @@ describe('reducers', () => {
         const reducer = require('../typings').default;
 
         const remoteUpdate = (sender, name, message) => ({
-            ...update(name, message),
+            ...update({ name, message }),
             meta: {
                 sender,
             },

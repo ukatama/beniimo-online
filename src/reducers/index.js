@@ -13,6 +13,7 @@ import rooms from './rooms';
 import route from './route';
 import toasts from './toasts';
 import typings from './typings';
+import ui from './ui';
 import users from './users';
 
 export default combineReducers({
@@ -27,6 +28,7 @@ export default combineReducers({
     route,
     toasts,
     typings,
+    ui,
     user: immutable(new Map(User)),
     users,
 });

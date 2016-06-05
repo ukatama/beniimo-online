@@ -4,7 +4,7 @@ describe('reducers', () => {
 
         jest.mock('../../browser/character');
         const character = require('../../browser/character');
-        const { Map } = require('immutable');
+        const { fromJS } = require('immutable');
 
         const { get } = require('../../actions/character');
         const reducer = require('../characters').default;
@@ -17,17 +17,18 @@ describe('reducers', () => {
         });
 
         it('gets character from url', () => {
-            const data = { data: 'data' };
-
             character.get.mockReturnValue({
                 url: 'url',
-                data,
+                data: 'data',
             });
 
             state = reducer(state, get('url'));
 
-            expect(state).toEqualImmutable(new Map({
-                url: data,
+            expect(state).toEqualImmutable(fromJS({
+                url: {
+                    url: 'url',
+                    data: 'data',
+                },
             }));
         });
     });

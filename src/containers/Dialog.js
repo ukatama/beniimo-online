@@ -3,12 +3,12 @@ import { ok, cancel, close } from '../actions/dialog';
 import Dialog from '../components/Dialog';
 
 export default connect(
-    (state) => ({
-        dialog: state.dialogs.first(),
+    ({ dialogs }) => ({
+        dialogs,
     }),
     (dispatch) => ({
-        onOK: (id) => dispatch(ok(id)),
-        onCalcel: (id) => dispatch(cancel(id)),
-        onClose: (id) => dispatch(close(id)),
+        onOK: (e, id) => dispatch(ok(id)),
+        onCalcel: (e, id) => dispatch(cancel(id)),
+        onClose: (e, id) => dispatch(close(id)),
     })
 )(Dialog);

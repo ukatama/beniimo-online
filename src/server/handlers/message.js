@@ -31,24 +31,25 @@ export const message = (client) => (next) => (action) => {
     switch (action.type) {
         case CREATE: {
             processFile(client, action)
-                .then((file_id) => diceReplace(`${action.message || ''}`)
-                    .then((diceMessage) => ({
-                        diceMessage,
-                        file_id,
-                    }))
+                .then(
+                    (file_id) => diceReplace(`${action.payload.message || ''}`)
+                        .then((diceMessage) => ({
+                            diceMessage,
+                            file_id,
+                        }))
                 )
-                .then(({diceMessage, file_id}) =>
+                .then(({ diceMessage, file_id }) =>
                     Message.insert({
                         user_id: client.user.id || null,
                         room_id: client.room.id || null,
-                        icon_id: action.icon_id || null,
-                        whisper_to: action.whisper_to || null,
-                        name: action.name || null,
-                        character_url: action.character_url || null,
+                        icon_id: action.payload.icon_id || null,
+                        whisper_to: action.payload.whisper_to || null,
+                        name: action.payload.name || null,
+                        character_url: action.payload.character_url || null,
                         message: diceMessage.message || null,
                         file_id,
                     })
-                    .then((message) => ({diceMessage, message}))
+                    .then((message) => ({ diceMessage, message }))
                 )
                 .then(({diceMessage, message}) => {
                     diceMessage.results.forEach((dice) => {
@@ -67,16 +68,16 @@ export const message = (client) => (next) => (action) => {
             if (!action.payload) {
                 Message
                     .findLimit(client.room.id, client.user.id)
-                    .then((messages) => client.emit(list(messages)))
+                    .then((messages) => client.emit(list(messages.reverse())))
                     .catch((e) => client.logger.error(e));
             } else {
                 Message
                     .findLimit(
                         client.room.id,
                         client.user.id,
-                        'id','<', action.lastId
+                        'id','<', action.payload
                     )
-                    .then((messages) => client.emit(old(messages)))
+                    .then((messages) => client.emit(old(messages.reverse())))
                     .catch((e) => client.logger.error(e));
             }
             break;

@@ -18,7 +18,8 @@ describe('browser', () => {
                 .then((character) => {
                     expect(character).toEqual({
                         url,
-                        data,
+                        link: url,
+                        ...data,
                     });
                 });
         });
@@ -36,7 +37,8 @@ describe('browser', () => {
                     expect(axios).not.toBeCalled();
                     expect(character).toEqual({
                         url,
-                        data,
+                        link: url,
+                        ...data,
                     });
                 });
         });
@@ -64,7 +66,8 @@ describe('browser', () => {
                 .then((c1) => {
                     expect(c1).toEqual({
                         url,
-                        data,
+                        link: url,
+                        ...data,
                     });
 
                     return p2;
@@ -72,8 +75,24 @@ describe('browser', () => {
                 .then((c2) => {
                     expect(c2).toEqual({
                         url,
-                        data,
+                        link: url,
+                        ...data,
                     });
+                });
+        });
+
+        pit('reject not JSON', () => {
+            const msg = 'err';
+
+            axios.mockClear();
+            axios.mockReturnValue(Promise.resolve({ data: msg }));
+
+            return get('http://example.com/path3')
+                .then(() => {
+                    throw new Error('Should not be resolved');
+                })
+                .catch((e) => {
+                    expect(e).toBe(msg);
                 });
         });
     });

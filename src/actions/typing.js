@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 
-const sync = () => ({ server: true });
+const sync = () => ({ sync: true });
 
 export const UPDATE = 'TYPING_UPDATE';
 export const update =
-    createAction(UPDATE, (name, message) => ({ name, message }), sync);
+    createAction(UPDATE, (typing) => (typing), sync);

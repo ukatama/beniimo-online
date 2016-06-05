@@ -3,17 +3,21 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
+import ArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import * as Colors from 'material-ui/styles/colors';
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
+import IPropTypes from 'react-immutable-proptypes';
 import { generateId } from '../utility/id';
 import { makeColor } from '../utility/color';
-import { MessageIcon } from '../containers/MessageIconContainer';
+import { pureRender } from '../utility/enhancer';
+import MessageIcon from '../containers/MessageIcon';
 
 let lastId = null;
 const genId = () => (lastId = generateId());
 
 const Style = {
+    /*
     Form: {
         display: 'flex',
         flexDirection: 'column',
@@ -65,6 +69,10 @@ const Style = {
     },
     Flex: {
         flex: '1 1 0',
+    },
+    */
+    Flex: {
+        display: 'flex',
     },
 };
 
@@ -123,9 +131,91 @@ RadioItem.propTypes = {
     icon_id: PropTypes.string,
 };
 
-export class MessageConfigDialog extends Component {
+const NameEditDialog = (props) => {
+    const {
+        character,
+        name,
+        open,
+        onClose,
+        onUpdateName,
+    } = props;
+
+    const actions = [
+        <FlatButton
+            primary
+            key="close"
+            label="Close"
+            onTouchTap={onClose}
+        />,
+    ];
+
+    const handleChange =
+        (key) => (e, value) => onUpdateName(e, name.set(key, value));
+    const characterName = character && character.get('name');
+
+    return (
+        <Dialog
+            autoScrollBodyContent
+            actions={actions}
+            open={open}
+            title="Name Config"
+            onRequestClose={onClose}
+        >
+            <TextField
+                fullWidth
+                isRequired
+                floatingLabelText="Name"
+                name="name"
+                value={name && name.get('name')}
+                onChange={handleChange('name')}
+            />
+            <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+                <TextField
+                    fullWidth
+                    floatingLabelText="Character Sheet URL"
+                    name="character_url"
+                    style={{ flex: '1 1 auto', marginRight: 16 }}
+                    type="url"
+                    value={name && name.get('character_url')}
+                    onChange={handleChange('character_url')}
+                />
+                <IconButton
+                    disabled={!character}
+                    onTouchTap={
+                        (e) =>
+                            character && handleChange('name')(e, characterName)
+                    }
+                >
+                    <ArrowUp />
+                </IconButton>
+            </div>
+        </Dialog>
+    );
+};
+NameEditDialog.propTypes = {
+    name: IPropTypes.contains({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string,
+        icon_id: PropTypes.string,
+    }),
+    character: IPropTypes.contains({
+        name: PropTypes.string,
+    }),
+    open: PropTypes.boolean,
+};
+export default pureRender(NameEditDialog);
+
+class OldNameEditDialog extends Component {
     static get propTypes() {
         return {
+            name: IPropTypes.contains({
+                id: PropTypes.string.isRequired,
+                name: PropTypes.string,
+                icon_id: PropTypes.string,
+            }),
+            onClose: IPropTypes.func.isRequired,
+            onUpdateName: IPropTypes.func.isRequired,
+            /*
             characters: PropTypes.object.isRequired,
             form: PropTypes.object.isRequired,
             iconList: PropTypes.arrayOf(
@@ -148,6 +238,7 @@ export class MessageConfigDialog extends Component {
             removeIcon: PropTypes.func.isRequired,
             onNotify: PropTypes.func.isRequired,
             onEditIcon: PropTypes.func.isRequired,
+            */
         };
     }
 

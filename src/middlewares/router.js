@@ -3,10 +3,10 @@ import { set, SET } from '../actions/route';
 import { parse } from '../router/Parser';
 
 const Redirects = {
-    [ CREATE ]: (action) => action.room.id,
+    [ CREATE ]: (action) => action.payload.id,
 };
 
-export default ({dispatch}) => (next) => (action) => {
+export default ({ dispatch }) => (next) => (action) => {
     if (action.type === SET && !action.route) {
         const {
             path,

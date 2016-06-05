@@ -1,7 +1,7 @@
 import IPropTypes from 'react-immutable-proptypes';
 import React, { PropTypes } from 'react';
 import lobby from '../containers/Lobby';
-import { ChatContainer as chat } from '../containers/ChatContainer';
+import chat from './Chat';
 import { Guest as guest } from './guest';
 
 const Handlers = {

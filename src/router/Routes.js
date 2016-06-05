@@ -13,6 +13,6 @@ export const Routes = [
     },
     {
         path: '/:roomId', route: 'chat',
-        onEnter: (dispatch) => ({roomId}) => dispatch(join(roomId)),
+        onEnter: (dispatch) => ({ roomId }) => dispatch(join({ id: roomId })),
     },
 ];

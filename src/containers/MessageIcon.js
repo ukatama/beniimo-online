@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { get as getCharacter } from '../actions/character';
-import { MessageIcon as Component } from '../components/MessageIcon';
+import MessageIcon from '../components/MessageIcon';
 import { bindActions } from './utility';
 
-export const MessageIcon = connect(
-    ({ characters }, { character_url }) => {
+export default connect(
+    ({ characters }, { character_url, typing }) => {
         const character_data = character_url && characters[character_url];
         if (!character_data) return {};
 
@@ -12,10 +12,12 @@ export const MessageIcon = connect(
         if (!data) return {};
 
         return {
+            character_url,
             icon_url: data.icon || data.image || data.portrait || null,
+            typing,
         };
     },
     bindActions({
         getCharacter,
     })
-)(Component);
+)(MessageIcon);

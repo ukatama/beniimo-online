@@ -7,11 +7,10 @@ import {
     create,
     fetch,
     updated,
-    joined,
+    join,
     list,
     password,
     userLeft,
-    userJoined,
     userList,
     CREATE,
     JOIN,
@@ -22,6 +21,9 @@ import {
     FETCH_USER,
     NOTES_UPDATE,
 } from '../../actions/room';
+import {
+    joined,
+} from '../../actions/user';
 import {PASSWORD_INCORRECT, Room} from '../models/room';
 import {generateId} from '../../utility/id';
 
@@ -43,19 +45,19 @@ export const room = (client) => (next) => (action) => {
             break;
         case JOIN:
             Room
-                .join(action.id, action.password || null)
+                .join(action.payload.id, action.payload.password || null)
                 .then((room) => {
                     client.join(room);
-                    client.emit(joined(room));
-                    client.publish(userJoined(client.user));
+                    client.emit(join(room));
+                    client.publish(join(client.user));
                     client.dispatch(fetchMessage());
                 })
                 .catch((e) => {
                     if (e === PASSWORD_INCORRECT) {
-                        client.emit(password(action.id));
-                    } else {
-                        return Promise.reject(e);
+                        client.emit(password(action.payload.id));
                     }
+
+                    return Promise.reject(e);
                 })
                 .catch((e) => client.logger.error(e));
             break;

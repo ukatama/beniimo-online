@@ -79,6 +79,21 @@ describe('reducers', () => {
                     name: 'Test1',
                 })],
             ]));
+
+            state = reducer(state, remove({ id: INITIAL_NAME_ID }));
+            expect(state).toEqualImmutable(new OrderedMap([
+                ['id1', fromJS({
+                    id: 'id1',
+                    name: 'Test1',
+                })],
+            ]));
+        });
+
+        it('inserts default after all removed', () => {
+            state = reducer(state, remove({ id: 'id1' }));
+            expect(state).toEqualImmutable(new OrderedMap([
+                INITIAL_ITEM,
+            ]));
         });
     });
 });
