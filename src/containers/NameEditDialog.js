@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { upload } from '../actions/icon';
 import { update } from '../actions/name';
 import NameEditDialog from '../components/NameEditDialog';
 
@@ -17,5 +18,6 @@ export default connect(
     },
     (dispatch) => ({
         onUpdateName: (e, name) => dispatch(update(name.toJS())),
+        onUploadIcons: (e, files) => dispatch(upload(files)),
     })
 )(NameEditDialog);

@@ -18,6 +18,9 @@ const Style = {
     Icon: {
         flex: '0 0 auto',
         height: 60,
+        width: 60,
+        minWidth: 60,
+        margin: '0 12px',
     },
 };
 
@@ -92,7 +95,7 @@ class MessageForm extends Component {
                     <MessageIcon
                         character_url={name.get('character_url')}
                         color={color}
-                        icon_id={name.get('icon_id')}
+                        id={name.get('icon_id')}
                         name={name.get('name')}
                     />
                 </FlatButton>

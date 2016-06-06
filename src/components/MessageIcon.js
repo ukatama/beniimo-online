@@ -107,9 +107,9 @@ export const MessageIcon = ({
     return <div style={{...Style, ...style}} />;
 };
 MessageIcon.propTypes = {
+    color: PropTypes.string.isRequired,
     getCharacter: PropTypes.func.isRequired,
     character_url: PropTypes.string,
-    color: PropTypes.string,
     icon_url: PropTypes.string,
     id: PropTypes.string,
     name: PropTypes.string,

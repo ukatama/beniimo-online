@@ -20,13 +20,13 @@ const Dialog = (props) => {
     const elements = Object.keys(table)
         .map((key) => {
             const Component = table[key];
-            const open = Boolean(dialog) && dialog.get('type') === key;
+            const open = Boolean(dialog) && type === key;
 
             return (
                 <Component
                     {...others}
-                    key={key}
                     dialog={open ? dialog : null}
+                    key={key}
                     open={open}
                     onClose={(e) => dialog && onClose(e, dialog.get('id'))}
                 />
@@ -36,9 +36,10 @@ const Dialog = (props) => {
     return <div>{elements}</div>;
 };
 Dialog.propTypes = {
-    dialog: IPropTypes.contains({
+    dialogs: IPropTypes.listOf(IPropTypes.contains({
         id: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
-    }),
+    })).isRequired,
+    onClose: PropTypes.func.isRequired,
 };
 export default pureRender(Dialog);

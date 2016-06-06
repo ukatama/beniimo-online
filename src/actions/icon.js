@@ -1,9 +1,17 @@
-import {createAction} from 'redux-actions';
+import { map } from 'lodash';
+import { createAction } from 'redux-actions';
 
-const sync = () => ({server: true});
+const sync = () => ({ sync: true });
 
 export const CREATE = 'ICON_CREATE';
-export const create = createAction(CREATE, (icon) => icon, sync);
+export const create = createAction(CREATE, (icon) => icon);
+
+export const UPLOAD = 'ICON_UPLOAD';
+export const upload = createAction(UPLOAD, (files) => map(files, (file) => ({
+    name: file.name,
+    type: file.type,
+    data: file,
+})), sync);
 
 const removeMeta = (message) => () => ({
     dialog: {
@@ -11,7 +19,7 @@ const removeMeta = (message) => () => ({
         title: 'Delete Icon',
         message,
     },
-    server: true,
+    sync: true,
 });
 
 export const REMOVE = 'ICON_REMOVE';
