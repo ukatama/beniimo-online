@@ -2,9 +2,11 @@ import IPropTypes from 'react-immutable-proptypes';
 import React, { PropTypes } from 'react';
 import { pureRender } from '../utility/enhancer';
 import NameEditDialog from '../containers/NameEditDialog';
+import RoomEditDialog from '../containers/RoomEditDialog';
 
 const table = {
     'name-edit': NameEditDialog,
+    'room-edit': RoomEditDialog,
 };
 
 const Dialog = (props) => {

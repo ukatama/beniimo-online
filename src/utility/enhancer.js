@@ -37,6 +37,33 @@ export function pureRender(ComposedComponent) {
 }
 
 /**
+ * Static render enhancer
+ * @param{Component} ComposedComponent - Component to compose
+ * @returns{Component} Wrapped comopnent
+ */
+export function staticRender(ComposedComponent) {
+    const displayName = wrapperName(ComposedComponent, 'StaticRenferWrapper');
+
+    return class PureRenferWrapper extends Component {
+        static get displayName() {
+            return displayName;
+        }
+
+        static get propTypes() {
+            return ComposedComponent.propTypes;
+        }
+
+        shouldComponentUpdate(...args) {
+            return false;
+        }
+
+        render() {
+            return <ComposedComponent {...this.props} />;
+        }
+    };
+}
+
+/**
  * Enhancer to utilize componentWillMount
  * @param{Component} ComposedComponent - Component to ComposedComponent
  * @param{function} callback - Callback function

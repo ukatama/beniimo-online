@@ -6,10 +6,9 @@ import {
 import {
     create,
     fetch,
-    updated,
+    update,
     join,
     list,
-    password,
     userLeft,
     userList,
     CREATE,
@@ -24,20 +23,26 @@ import {
 import {
     joined,
 } from '../../actions/user';
+import { set } from '../../actions/route';
 import {PASSWORD_INCORRECT, Room} from '../models/room';
 import {generateId} from '../../utility/id';
 
 const ID_LENGTH = 16;
 
 export const room = (client) => (next) => (action) => {
-    switch (action.type) {
+    const {
+        payload,
+        type,
+   } = action;
+
+    switch (type) {
         case CREATE:
             Room
                 .insert({
                     id: generateId((new Date()).getTime() + '')
                             .substr(0, ID_LENGTH),
-                    title: action.title || null,
-                    password: action.password || null,
+                    title: payload.title || null,
+                    password: payload.password || null,
                     user_id: client.user.id || null,
                 })
                 .then((room) => client.emit(create(room)))
@@ -45,7 +50,7 @@ export const room = (client) => (next) => (action) => {
             break;
         case JOIN:
             Room
-                .join(action.payload.id, action.payload.password || null)
+                .join(payload.id, payload.password || null)
                 .then((room) => {
                     client.join(room);
                     client.emit(join(room));
@@ -54,7 +59,7 @@ export const room = (client) => (next) => (action) => {
                 })
                 .catch((e) => {
                     if (e === PASSWORD_INCORRECT) {
-                        client.emit(password(action.payload.id));
+                        client.emit(set('/'));
                     }
 
                     return Promise.reject(e);
@@ -75,7 +80,7 @@ export const room = (client) => (next) => (action) => {
         case REMOVE:
             Room
                 .del({
-                    id: action.id || null,
+                    id: payload || null,
                     user_id: client.user.id || null,
                 })
                 .then(() => {})
@@ -86,14 +91,14 @@ export const room = (client) => (next) => (action) => {
                 .update(
                     client.room.id,
                     client.user.id,
-                    _(action)
+                    _(payload)
                         .pick(['title', 'password', 'state'])
                         .mapValues((a) => a === '' ? null : a)
                         .value()
                 )
                 .then((room) => {
-                    client.emit(updated(room));
-                    client.publish(updated(room));
+                    client.emit(update(room));
+                    client.publish(update(room));
                 })
                 .catch((e) => client.logger.error(e));
             break;
@@ -124,12 +129,12 @@ export const room = (client) => (next) => (action) => {
                 .update(
                     client.room.id,
                     client.user.id,
-                    {notes: action.notes || null},
+                    { notes: payload || null },
                     true
                 )
                 .then((room) => {
-                    client.emit(updated(room));
-                    client.publish(updated(room));
+                    client.emit(update(room));
+                    client.publish(update(room));
 
                     client.dispatch(createMessage({
                         name: 'NOTES',
