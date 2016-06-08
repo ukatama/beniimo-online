@@ -29,5 +29,16 @@ describe('reducers', () => {
                 drawer: false,
             }));
         });
+
+        it('closes drawer by route event', () => {
+            const { set } = require('../../actions/route');
+
+            state = reducer(state, drawer(true));
+            state = reducer(state, set('/'));
+
+            expect(state).toEqualImmutable(fromJS({
+                drawer: false,
+            }));
+        });
     });
 });

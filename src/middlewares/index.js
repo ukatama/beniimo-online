@@ -7,10 +7,11 @@ import notification from './notification';
 import router from './router';
 import socket from './socket';
 import sound from './sound';
+import persistent from './persistent';
 import toast from './toast';
 
 const middlewares = [
-    promise,
+    persistent('names', 'nekochat:${room.get("id")}:names'),
     dialog,
     dice,
     notification,

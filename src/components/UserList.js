@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
-import { pureRender } from '../utility/enhancer';
+import { pureRender, willMount } from '../utility/enhancer';
 import UserListItem from './UserListItem';
 
 const UserList = (props) => {
@@ -22,5 +22,6 @@ UserList.propTypes = {
     users: IPropTypes.listOf(IPropTypes.contains({
         id: PropTypes.string.isRequired,
     })).isRequired,
+    onFetchUsers: PropTypes.func.isRequired,
 };
 export default pureRender(UserList);

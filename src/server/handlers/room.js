@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import {
-    create as createMessage,
-    fetch as fetchMessage,
+    fetch as ifetch,
+} from '../../actions/icon';
+import {
+    create as mcreate,
+    fetch as mfetch,
 } from '../../actions/message';
 import {
     create,
@@ -9,19 +12,20 @@ import {
     update,
     join,
     list,
-    userLeft,
-    userList,
     CREATE,
     JOIN,
     LEAVE,
     FETCH,
     REMOVE,
     UPDATE,
-    FETCH_USER,
-    NOTES_UPDATE,
 } from '../../actions/room';
+import { UPDATE as MUPDATE } from '../../actions/memo';
 import {
     joined,
+    left,
+    fetch as ufetch,
+    list as ulist,
+    FETCH as UFETCH,
 } from '../../actions/user';
 import { set } from '../../actions/route';
 import {PASSWORD_INCORRECT, Room} from '../models/room';
@@ -54,8 +58,10 @@ export const room = (client) => (next) => (action) => {
                 .then((room) => {
                     client.join(room);
                     client.emit(join(room));
-                    client.publish(join(client.user));
-                    client.dispatch(fetchMessage());
+                    client.publish(joined(client.user));
+                    client.dispatch(ifetch());
+                    client.dispatch(mfetch());
+                    client.dispatch(ufetch());
                 })
                 .catch((e) => {
                     if (e === PASSWORD_INCORRECT) {
@@ -68,7 +74,7 @@ export const room = (client) => (next) => (action) => {
             break;
         case LEAVE:
             client.dispatch(fetch());
-            client.publish(userLeft(client.user));
+            client.publish(left(client.user));
             client.leave();
             break;
         case FETCH:
@@ -102,7 +108,7 @@ export const room = (client) => (next) => (action) => {
                 })
                 .catch((e) => client.logger.error(e));
             break;
-        case FETCH_USER:
+        case UFETCH:
             if (!client.room) break;
 
             client.redis.hgetall(`${client.room_key}:users`, (err, obj) => {
@@ -112,7 +118,7 @@ export const room = (client) => (next) => (action) => {
                     return;
                 }
 
-                client.emit(userList(
+                client.emit(ulist(
                     _(obj)
                         .values()
                         .map((json) => JSON.parse(json))
@@ -122,26 +128,26 @@ export const room = (client) => (next) => (action) => {
             });
             break;
 
-        case NOTES_UPDATE:
+        case MUPDATE:
             if (!client.room) break;
 
             Room
                 .update(
                     client.room.id,
                     client.user.id,
-                    { notes: payload || null },
+                    { memo: payload || null },
                     true
                 )
                 .then((room) => {
                     client.emit(update(room));
                     client.publish(update(room));
 
-                    client.dispatch(createMessage({
-                        name: 'NOTES',
-                        message: JSON.stringify(room.notes
+                    client.dispatch(mcreate({
+                        name: 'MEMO',
+                        message: JSON.stringify(room.memo
                             .split(/\r\n|\n/)
                             .map((line) => [{
-                                type: 'notes',
+                                type: 'memo',
                                 text: line,
                             }])),
                     }));

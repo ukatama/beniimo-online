@@ -5,7 +5,8 @@ import { update } from '../actions/name';
 
 export default connect(
     ({ names, icons }, { name_id }) => {
-        const name = name_id && names.get(name_id);
+        const name =
+            name_id && names.find((name) => name.get('id') === name_id);
 
         return {
             name,

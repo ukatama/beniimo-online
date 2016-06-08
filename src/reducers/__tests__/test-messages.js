@@ -132,5 +132,11 @@ describe('reducers', () => {
                 },
             ]));
         });
+
+        it('cleared by leaving', () => {
+            const { leave } = require('../../actions/room');
+            state = reducer(state, leave());
+            expect(state).toEqualImmutable(fromJS([]));
+        });
     });
 });

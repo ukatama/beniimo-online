@@ -39,12 +39,14 @@ class MessageForm extends Component {
             onRemoveName: PropTypes.func.isRequired,
             onSendMessage: PropTypes.func.isRequired,
             onTyping: PropTypes.func.isRequired,
+            state: PropTypes.string,
         };
     }
 
     render() {
         const {
             name,
+            state,
             onCreateName,
             onEditName,
             onRemoveName,
@@ -102,6 +104,7 @@ class MessageForm extends Component {
                 <MessageFormInput
                     name={name.get('name')}
                     ref={(c) => (this.input = c)}
+                    state={state}
                     onChange={onChange}
                     onSubmit={onSubmit}
                 />

@@ -1,6 +1,7 @@
 import AppBar from 'material-ui/AppBar';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
+import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import Close from 'material-ui/svg-icons/navigation/close';
 import React, { PropTypes } from 'react';
@@ -18,16 +19,19 @@ const ChatDrawer = (props) => {
 
     return (
         <Drawer
-            docker={false}
+            docked={false}
             open={open}
             onRequestChange={onRequestChange}
         >
             <AppBar
-                iconElementLeft={<Close />}
-                title="Nekochat"
-                onLeftIconButtonTouchTap={
-                    () => onRequestChange(!open, 'clickaway')
+                iconElementLeft={
+                    <IconButton
+                        onTouchTap={() => onRequestChange(!open, 'clickaway')}
+                    >
+                        <Close color="white" />
+                    </IconButton>
                 }
+                title="Nekochat"
             />
             <MenuItem href="/" onTouchTap={(e) => onRoute(e, '/')}>
                 Leave

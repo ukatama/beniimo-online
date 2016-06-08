@@ -8,7 +8,7 @@ import * as Colors from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
 import React, { Component, PropTypes } from 'react';
 import { FROM_HEIGHT } from '../components/MessageForm';
-import {Notes} from '../containers/notes';
+import Memo from '../containers/Memo';
 import ChatAppBar from '../containers/ChatAppBar';
 import MessageList from '../containers/MessageList';
 import ChatDrawer from '../containers/ChatDrawer';
@@ -32,7 +32,7 @@ const Chat = () => (
         </div>
         <div id="notification-anchor" />
         <div style={{flex: '0 0 auto', maxHeight: '160px'}}>
-            <Notes />
+            <Memo />
         </div>
         <MessageList />
         <ChatDrawer />

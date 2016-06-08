@@ -8,6 +8,7 @@ export default class MessageFormInput extends Component {
             name: PropTypes.string.isRequired,
             onChange: PropTypes.func.isRequired,
             onSubmit: PropTypes.func.isRequired,
+            state: PropTypes.string,
         };
     }
 
@@ -21,7 +22,8 @@ export default class MessageFormInput extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         return nextState.value !== this.state.value ||
-            nextProps.name !== this.props.name;
+            nextProps.name !== this.props.name ||
+            nextProps.state !== this.props.state;
     }
 
     set value(value) {
@@ -38,6 +40,7 @@ export default class MessageFormInput extends Component {
     render() {
         const {
             name,
+            state,
             onChange,
             onSubmit,
         } = this.props;
@@ -60,10 +63,11 @@ export default class MessageFormInput extends Component {
             <TextField
                 fullWidth
                 multiLine
-                col={1}
+                disabled={state !== 'open'}
                 floatingLabelText={name}
                 name="message"
-                value={value}
+                rows={1}
+                value={value || undefined}
                 onChange={handleChange}
                 onCompositionEnd={() => (this.composition = false)}
                 onCompositionStart={() => (this.composition = true)}

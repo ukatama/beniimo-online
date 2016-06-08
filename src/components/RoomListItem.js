@@ -50,7 +50,6 @@ const RoomListItem = (props) => {
     const path = `/${room.get('id')}`;
 
     const cancelClick = (e) => {
-        console.log(e);
         e.preventDefault();
         e.stopPropagation();
     };

@@ -65,7 +65,4 @@ IconGrid.propTypes = {
         character_url: PropTypes.string,
     }),
 };
-export default pureRender(willMount(
-    IconGrid,
-    ({ onFetchIcons }) => onFetchIcons()
-));
+export default pureRender(IconGrid);

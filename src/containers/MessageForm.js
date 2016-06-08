@@ -6,9 +6,10 @@ import { connect } from 'react-redux';
 import MessageForm from '../components/MessageForm';
 
 export default connect(
-    ({ characters }, { name }) => ({
+    ({ characters, room }, { name }) => ({
         characters,
         name,
+        state: room.get('state'),
     }),
     (dispatch) => ({
         onCreateName: (e, name) => dispatch(create(name)),

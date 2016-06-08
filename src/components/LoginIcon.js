@@ -5,6 +5,10 @@ import IPropTypes from 'react-immutable-proptypes';
 import { pureRender } from '../utility/enhancer';
 import { green500, yellow500 } from 'material-ui/styles/colors';
 
+const Style = {
+    display: 'block',
+};
+
 const LoginIcon = (props) => {
     const {
         user,
@@ -14,14 +18,9 @@ const LoginIcon = (props) => {
         ? green500
         : yellow500;
 
-    const style = {
-        color,
-        display: 'block',
-    };
+    const Icon = user.get('login') ? Person : PersonOutline;
 
-    return user.login('login')
-        ? <Person style={style} />
-        : <PersonOutline style={style} />;
+    return <Icon color={color} style={Style} />;
 };
 LoginIcon.propTypes = {
     user: IPropTypes.contains({
