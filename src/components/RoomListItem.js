@@ -13,6 +13,9 @@ import { Timestamp } from './Timestamp';
 import { pureRender } from '../utility/enhancer';
 
 const Style = {
+    Container: {
+        display: 'block',
+    },
     Button: {
         height: 'auto',
         textAlign: 'left',
@@ -55,7 +58,7 @@ const RoomListItem = (props) => {
     };
 
     return (
-        <li>
+        <li style={Style.Container}>
             <div style={Style.Flex}>
                 <FlatButton
                     href={path}

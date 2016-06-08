@@ -1,9 +1,11 @@
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import React, { PropTypes } from 'react';
+import RoomCreateButton from '../containers/RoomCreateButton';
 import RoomList from '../containers/RoomList';
+import { staticRender } from '../utility/enhancer';
 
-const Lobby = ({ onCreateRoom }) => {
+const Lobby = () => {
     document.title = "Nekochat";
 
     const Style = {
@@ -11,38 +13,35 @@ const Lobby = ({ onCreateRoom }) => {
             display: 'flex',
             flexDirection: 'column',
             height: '100%',
-            WebkitOverflowScrolling: 'touch',
+        },
+        AppBar: {
+            flex: '0 0 auto',
         },
         RoomList: {
             flex: '1 1 auto',
-            overflow: 'auto',
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch',
         },
     };
 
     return (
         <div style={Style.Container}>
-            <AppBar
-                iconElementLeft={
-                    <a href="/">
-                        <img src="/img/nekokoro48.png" />
-                    </a>
-                }
-                iconElementRight={
-                    <IconButton
-                        iconClassName="material-icons"
-                        onTouchTap={() => onCreateRoom()}
-                    >
-                        add
-                    </IconButton>
-                }
-                title="Nekochat"
-            />
+            <div style={Style.AppBar}>
+                <AppBar
+                    iconElementLeft={
+                        <a href="/">
+                            <img src="/img/nekokoro48.png" />
+                        </a>
+                    }
+                    iconElementRight={<RoomCreateButton />}
+                    title="Nekochat"
+                />
+            </div>
             <div id="notification-anchor" />
-            <RoomList style={Style.RoomList} />
+            <div style={Style.RoomList}>
+                <RoomList />
+            </div>
         </div>
     );
 };
-Lobby.propTypes = {
-    onCreateRoom: PropTypes.func.isRequired,
-};
-export default Lobby;
+export default staticRender(Lobby);

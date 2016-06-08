@@ -67,7 +67,7 @@ export default class MessageFormInput extends Component {
                 floatingLabelText={name}
                 name="message"
                 rows={1}
-                value={value || undefined}
+                value={value}
                 onChange={handleChange}
                 onCompositionEnd={() => (this.composition = false)}
                 onCompositionStart={() => (this.composition = true)}

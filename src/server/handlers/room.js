@@ -12,6 +12,7 @@ import {
     update,
     join,
     list,
+    password,
     CREATE,
     JOIN,
     LEAVE,
@@ -47,6 +48,7 @@ export const room = (client) => (next) => (action) => {
                             .substr(0, ID_LENGTH),
                     title: payload.title || null,
                     password: payload.password || null,
+                    state: payload.state || 'open',
                     user_id: client.user.id || null,
                 })
                 .then((room) => client.emit(create(room)))
@@ -65,7 +67,8 @@ export const room = (client) => (next) => (action) => {
                 })
                 .catch((e) => {
                     if (e === PASSWORD_INCORRECT) {
-                        client.emit(set('/'));
+                        return Room.find('id', payload.id)
+                            .then((room) => client.emit(password(room)));
                     }
 
                     return Promise.reject(e);
@@ -86,7 +89,7 @@ export const room = (client) => (next) => (action) => {
         case REMOVE:
             Room
                 .del({
-                    id: payload || null,
+                    id: payload.id || null,
                     user_id: client.user.id || null,
                 })
                 .then(() => {})

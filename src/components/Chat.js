@@ -13,7 +13,7 @@ import ChatAppBar from '../containers/ChatAppBar';
 import MessageList from '../containers/MessageList';
 import ChatDrawer from '../containers/ChatDrawer';
 import MessageFormList from '../containers/MessageFormList';
-import { pureRender } from '../utility/enhancer';
+import { staticRender } from '../utility/enhancer';
 
 const Style = {
     Container: {
@@ -39,4 +39,4 @@ const Chat = () => (
         <MessageFormList />
     </div>
 );
-export default pureRender(Chat);
+export default staticRender(Chat);

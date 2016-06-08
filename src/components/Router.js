@@ -1,6 +1,6 @@
 import IPropTypes from 'react-immutable-proptypes';
 import React, { PropTypes } from 'react';
-import lobby from '../containers/Lobby';
+import lobby from './Lobby';
 import chat from './Chat';
 import { Guest as guest } from './guest';
 

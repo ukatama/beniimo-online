@@ -30,17 +30,17 @@ class RoomEditDialog extends Component {
             onUpdateRoom,
         } = this.props;
 
+        const handleUpdateRoom = (e) => {
+            onUpdateRoom(e, this.form.data);
+            onClose(e);
+        };
+
         const actions = [
             <FlatButton
                 primary
                 key="update"
                 label="Update"
-                onTouchTap={
-                    (e) => {
-                        onUpdateRoom(e, this.form.data);
-                        onClose(e);
-                    }
-                }
+                onTouchTap={handleUpdateRoom}
             />,
             <FlatButton
                 secondary
@@ -61,7 +61,7 @@ class RoomEditDialog extends Component {
                 <RoomEditForm
                     ref={(c) => (this.form = c)}
                     room={room}
-                    onUpdateRoom={onUpdateRoom}
+                    onSubmit={handleUpdateRoom}
                 />
             </Dialog>
         );

@@ -3,18 +3,25 @@ import React, { PropTypes } from 'react';
 import { pureRender } from '../utility/enhancer';
 import MemoEditDialog from '../containers/MemoEditDialog';
 import NameEditDialog from '../containers/NameEditDialog';
+import RoomCreateDialog from '../containers/RoomCreateDialog';
 import RoomEditDialog from '../containers/RoomEditDialog';
+import RoomPasswordDialog from '../containers/RoomPasswordDialog';
+import Confirm from './Confirm';
 
 const table = {
+    confirm: Confirm,
     'memo-edit': MemoEditDialog,
     'name-edit': NameEditDialog,
+    'room-create': RoomCreateDialog,
     'room-edit': RoomEditDialog,
+    'room-password': RoomPasswordDialog,
 };
 
 const Dialog = (props) => {
     const {
         dialogs,
         onClose,
+        onOK,
         ...others,
     } = props;
 
@@ -33,6 +40,7 @@ const Dialog = (props) => {
                     key={key}
                     open={open}
                     onClose={(e) => dialog && onClose(e, dialog.get('id'))}
+                    onOK={(e) => dialog && onOK(e, dialog.get('id'))}
                 />
             );
         });
@@ -45,5 +53,6 @@ Dialog.propTypes = {
         type: PropTypes.string.isRequired,
     })).isRequired,
     onClose: PropTypes.func.isRequired,
+    onOK: PropTypes.func.isRequired,
 };
 export default pureRender(Dialog);

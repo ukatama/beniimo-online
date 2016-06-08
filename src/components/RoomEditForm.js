@@ -6,10 +6,10 @@ import IPropTypes from 'react-immutable-proptypes';
 import { pureRender } from '../utility/enhancer';
 
 const roomToState = (room) => ({
-    title: room.get('title'),
-    password: room.get('password') ? 'password' : null,
+    title: room && room.get('title'),
+    password: room && room.get('password') ? 'password' : null,
     passwordChanged: false,
-    state: room.get('state'),
+    state: room && room.get('state') || 'open',
 });
 
 export default class RoomEditForm extends Component {
@@ -19,8 +19,8 @@ export default class RoomEditForm extends Component {
                 title: PropTypes.string.isRequired,
                 password: PropTypes.bool.isRequired,
                 state: PropTypes.string.isRequired,
-            }).isRequired,
-            onUpdateRoom: PropTypes.func.isRequired,
+            }),
+            onSubmit: PropTypes.func.isRequired,
         };
     }
 
@@ -60,12 +60,12 @@ export default class RoomEditForm extends Component {
             title,
             password,
             state,
-            onUpdateRoom,
+            onSubmit,
         } = this.state;
 
         const handleSubmit = (e) => {
             e.preventDefault();
-            onUpdateRoom(e, this.data);
+            onSubmit(e, this.data);
         };
 
         return (
