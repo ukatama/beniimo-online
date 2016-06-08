@@ -1,5 +1,4 @@
 import {connect} from 'react-redux';
-import { open } from '../actions/dialog';
 import Memo from '../components/Memo';
 
 export default connect(

@@ -46,7 +46,6 @@ ImageIcon.propTypes = {
 
 export const MessageIcon = ({
     id,
-    type,
     character_url,
     icon_url,
     name,

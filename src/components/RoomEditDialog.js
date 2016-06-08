@@ -5,13 +5,6 @@ import IPropTypes from 'react-immutable-proptypes';
 import { pureRender } from '../utility/enhancer';
 import RoomEditForm from './RoomEditForm';
 
-const roomToState = (room) => ({
-    title: room.get('title'),
-    password: room.get('password') ? 'password' : null,
-    passwordChanged: false,
-    state: room.get('state'),
-});
-
 class RoomEditDialog extends Component {
     static get propTypes() {
         return {

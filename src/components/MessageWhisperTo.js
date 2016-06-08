@@ -1,7 +1,6 @@
 import { red500 } from 'material-ui/styles/colors';
 import React, { PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
-import User from '../browser/user';
 import { pureRender } from '../utility/enhancer';
 
 const Style = {

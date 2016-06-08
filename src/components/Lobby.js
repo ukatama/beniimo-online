@@ -1,6 +1,5 @@
 import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import RoomCreateButton from '../containers/RoomCreateButton';
 import RoomList from '../containers/RoomList';
 import { staticRender } from '../utility/enhancer';

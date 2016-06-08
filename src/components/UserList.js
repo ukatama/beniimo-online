@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
-import { pureRender, willMount } from '../utility/enhancer';
+import { pureRender } from '../utility/enhancer';
 import UserListItem from './UserListItem';
 
 const UserList = (props) => {

@@ -1,19 +1,11 @@
-import { List } from 'immutable';
-import AppBar from 'material-ui/AppBar';
-import FontIcon from 'material-ui/FontIcon';
-import IconButton from 'material-ui/IconButton';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import * as Colors from 'material-ui/styles/colors';
-import Divider from 'material-ui/Divider';
-import React, { Component, PropTypes } from 'react';
-import { FROM_HEIGHT } from '../components/MessageForm';
+import React from 'react';
 import Memo from '../containers/Memo';
 import ChatAppBar from '../containers/ChatAppBar';
-import MessageList from '../containers/MessageList';
 import ChatDrawer from '../containers/ChatDrawer';
+import MessageList from '../containers/MessageList';
 import MessageFormList from '../containers/MessageFormList';
 import { staticRender } from '../utility/enhancer';
+import './ChatDrawer';
 
 const Style = {
     Container: {
@@ -24,7 +16,6 @@ const Style = {
     },
 };
 
-// ToDo: document.title
 const Chat = () => (
     <div style={Style.Container}>
         <div style={{ flex: "0 0 auto" }}>

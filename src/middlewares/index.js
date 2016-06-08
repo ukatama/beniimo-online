@@ -13,6 +13,7 @@ import toast from './toast';
 
 const middlewares = [
     persistent('names', 'nekochat:${room.get("id")}:names'),
+    promise,
     dialog,
     dice,
     notification,

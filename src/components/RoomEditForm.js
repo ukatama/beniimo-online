@@ -1,9 +1,7 @@
-import { pick } from 'lodash';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 import React, { Component, PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
-import { pureRender } from '../utility/enhancer';
 
 const roomToState = (room) => ({
     title: room && room.get('title'),
@@ -11,6 +9,12 @@ const roomToState = (room) => ({
     passwordChanged: false,
     state: room && room.get('state') || 'open',
 });
+
+const Style = {
+    RadioGroup: {
+        marginTop: 18,
+    },
+};
 
 export default class RoomEditForm extends Component {
     static get propTypes() {
@@ -94,6 +98,7 @@ export default class RoomEditForm extends Component {
                 />
                 <RadioButtonGroup
                     name="state"
+                    style={Style.RadioGroup}
                     valueSelected={state}
                     onChange={(e, state) => this.setState({ state })}
                 >

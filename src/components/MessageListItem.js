@@ -4,9 +4,6 @@ import { findDOMNode } from 'react-dom';
 import IPropTypes from 'react-immutable-proptypes';
 import MessageIcon from '../containers/MessageIcon';
 import { makeColor } from '../utility/color';
-import {
-    CharacterLinkButton,
-} from '../containers/CharacterLinkButtonContainer';
 import { Timestamp } from './Timestamp';
 import MessageAttachedFile from './MessageAttachedFile';
 import MessageBody from './MessageBody';
@@ -77,7 +74,6 @@ class MessageListItem extends Component {
                     PropTypes.string,
                     PropTypes.number,
                 ]),
-                file_id: PropTypes.string,
                 icon_id: PropTypes.string,
                 iconType: PropTypes.string,
                 character_url: PropTypes.string,
@@ -107,22 +103,14 @@ class MessageListItem extends Component {
             typing,
         } = this.props;
         const {
-            created,
-            file_id,
             icon_id,
             iconType,
             character_url,
-            modified,
             name,
             user_id,
-            whisper_to,
         } = message.toJS();
 
         const color = makeColor(`${name}${user_id}`);
-
-        const fileElement = file_id && (
-            <img src={`/file/${file_id}`} />
-        );
 
         return (
             <div

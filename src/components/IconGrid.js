@@ -1,8 +1,7 @@
-import { Map } from 'immutable';
 import React, { PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
 import { nameColor } from '../utility/color';
-import { pureRender, willMount } from '../utility/enhancer';
+import { pureRender } from '../utility/enhancer';
 import IconGridItem from './IconGridItem';
 
 const Style = {
@@ -16,7 +15,6 @@ const IconGrid = (props) => {
     const {
         name,
         icons,
-        onFetchIcons,
         onUpdateName,
     } = props;
 
@@ -55,7 +53,6 @@ const IconGrid = (props) => {
     );
 };
 IconGrid.propTypes = {
-    onFetchIcons: PropTypes.func.isRequired,
     onUpdateName: PropTypes.func.isRequired,
     icons: IPropTypes.listOf(IPropTypes.contains({
         id: PropTypes.string.isRequired,

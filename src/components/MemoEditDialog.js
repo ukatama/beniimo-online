@@ -1,7 +1,7 @@
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import React, {Component, PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { singleState, pureRender } from '../utility/enhancer';
 
 const MemoEditDialog = (props) => {

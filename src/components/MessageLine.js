@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import IPropTypes from 'react-immutable-proptypes';
 import MessageNode from './MessageNode';
 

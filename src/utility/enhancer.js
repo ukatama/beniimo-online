@@ -6,7 +6,8 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 const wrapperName = (ComposedComponent, name) => {
     const originalName =
         ComposedComponent.displayName || ComposedComponent.name;
-    const displayName = `${name}@${originalName}`;
+
+    return `${name}@${originalName}`;
 };
 
 /**
@@ -53,7 +54,7 @@ export function staticRender(ComposedComponent) {
             return ComposedComponent.propTypes;
         }
 
-        shouldComponentUpdate(...args) {
+        shouldComponentUpdate() {
             return false;
         }
 

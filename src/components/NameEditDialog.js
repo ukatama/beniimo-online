@@ -1,18 +1,12 @@
-import { map } from 'lodash';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
 import ArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
-import * as Colors from 'material-ui/styles/colors';
-import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
+import React, {  PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
-import { generateId } from '../utility/id';
-import { makeColor } from '../utility/color';
 import { pureRender } from '../utility/enhancer';
 import IconGrid from '../containers/IconGrid';
-import MessageIcon from '../containers/MessageIcon';
 import FileUploadButton from './FileUploadButton';
 
 const Style = {

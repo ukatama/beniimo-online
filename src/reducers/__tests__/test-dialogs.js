@@ -6,7 +6,7 @@ describe('reducers', () => {
         const { genId } = require('../../utility/id');
 
         const Immutable = require('immutable');
-        const { fromJS, List } = Immutable;
+        const { fromJS } = Immutable;
 
 
         const { open, ok, close } = require('../../actions/dialog');

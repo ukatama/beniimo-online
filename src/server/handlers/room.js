@@ -28,7 +28,6 @@ import {
     list as ulist,
     FETCH as UFETCH,
 } from '../../actions/user';
-import { set } from '../../actions/route';
 import {PASSWORD_INCORRECT, Room} from '../models/room';
 import {generateId} from '../../utility/id';
 

@@ -1,12 +1,6 @@
-import FontIcon from 'material-ui/FontIcon';
 import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import { ListItem } from 'material-ui/List';
-import MenuItem from 'material-ui/MenuItem';
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
-import { findDOMNode } from 'react-dom';
 import RoomActionMenu from './RoomActionMenu';
 import RoomStatusIcons from './RoomStatusIcons';
 import { Timestamp } from './Timestamp';
@@ -45,17 +39,10 @@ const Style = {
 const RoomListItem = (props) => {
     const {
         room,
-        user,
         onRoute,
-        onRemoveRoom,
     } = props;
 
     const path = `/${room.get('id')}`;
-
-    const cancelClick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    };
 
     return (
         <li style={Style.Container}>

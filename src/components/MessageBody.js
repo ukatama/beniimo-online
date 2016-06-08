@@ -1,5 +1,5 @@
 import { List, Map } from 'immutable';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import IPropTypes from 'react-immutable-proptypes';
 import { pureRender } from '../utility/enhancer';
 import MessageLine from './MessageLine';

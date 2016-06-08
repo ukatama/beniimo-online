@@ -1,6 +1,5 @@
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
 import React, { Component, PropTypes } from 'react';
 import RoomEditForm from './RoomEditForm';
 
@@ -13,7 +12,7 @@ export default class RoomCreateDialog extends Component {
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps) {
         return nextProps.open !== this.props.open;
     }
 

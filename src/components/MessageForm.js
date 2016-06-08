@@ -57,17 +57,23 @@ class MessageForm extends Component {
             onUploadImage,
         } = this.props;
 
-        const onSubmit = (e) => {
-            e.preventDefault();
-
+        const parseMessage = () => {
             const value = this.input.value || null;
-            if (!value) return;
+            if (!value) return null;
 
             const match = value.match(/^(@([^ ]+) )?((.|\r|\n)*?)$/);
-            if (!match) return;
+            if (!match) return null;
 
             const whisper_to = match[2] || null;
             const message = match[3] || null;
+
+            return { whisper_to, message };
+        };
+
+        const onSubmit = (e) => {
+            e.preventDefault();
+
+            const { whisper_to, message } = parseMessage();
             if (!message) return;
 
             onTyping(e, null);

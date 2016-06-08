@@ -1,4 +1,3 @@
-import { Map } from 'immutable';
 import FlatButton from 'material-ui/FlatButton';
 import React, { PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';

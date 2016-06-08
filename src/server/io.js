@@ -1,11 +1,10 @@
 import ExpressSocketIOSession from 'express-socket.io-session';
-import {getLogger} from 'log4js';
+import { getLogger } from 'log4js';
 import SocketIO from 'socket.io';
-import {loggedin} from '../actions/user';
-import {Connection} from './connection';
-import {server} from './server';
-import {session} from './session';
-import {getUser} from './user';
+import { Connection } from './connection';
+import { server } from './server';
+import { session } from './session';
+import { getUser } from './user';
 
 const logger = getLogger('[SOCKET]');
 

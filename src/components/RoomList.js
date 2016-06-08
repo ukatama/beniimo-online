@@ -1,7 +1,5 @@
-import { List } from 'material-ui/List';
 import IPropTypes from 'react-immutable-proptypes';
-import { zip } from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import RoomListItem from './RoomListItem';
 import { pureRender } from '../utility/enhancer';
 

@@ -1,6 +1,5 @@
 import TextField from 'material-ui/TextField';
 import React, { Component, PropTypes } from 'react';
-import { pureRender } from '../utility/enhancer';
 
 export default class MessageFormInput extends Component {
     static get propTypes() {
