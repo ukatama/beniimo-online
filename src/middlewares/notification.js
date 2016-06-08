@@ -4,13 +4,17 @@ import { notify } from '../browser/notification';
 export default ({ getState }) => (next) => (action) => {
     if (!action.meta || !action.meta.notify) return next(action);
 
+    const force = action.meta.notify.force;
+
     const state = getState();
-    if (state.dom.get('focused')) return next(action);
+    if (!force && state.dom.get('focused')) return next(action);
 
     const message = transform(
         action.meta.notify,
         (result, value, key) => {
-            result[key] = template(value)({ action, state });
+            result[key] = typeof(value) === "string"
+                ? template(value)({ action, state })
+                : value;
         },
         {}
     );

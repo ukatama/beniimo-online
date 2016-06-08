@@ -73,5 +73,35 @@ describe('middlewares', () => {
             expect(notify).not.toBeCalled();
             expect(next.mock.calls).toEqual([[action]]);
         });
+
+        it('notifies with force option', () => {
+            const getState = jest.fn().mockReturnValue({
+                dom: new Map({ focused: true }),
+            });
+            const next = jest.fn();
+            const action = {
+                type: 'TEST',
+                payload: {
+                    data: {test: 1234},
+                },
+                meta: {
+                    notify: {
+                        force: true,
+                        title: 'title',
+                        body: 'body',
+                    },
+                },
+            };
+
+            notify.mockClear();
+            middleware({ getState })(next)(action);
+
+            expect(notify).toBeCalledWith({
+                force: true,
+                title: 'title',
+                body: 'body',
+            });
+            expect(next.mock.calls).toEqual([[action]]);
+        });
     });
 });
