@@ -16,9 +16,9 @@ export default class RoomEditForm extends Component {
     static get propTypes() {
         return {
             room: IPropTypes.contains({
-                title: PropTypes.string.isRequired,
-                password: PropTypes.bool.isRequired,
-                state: PropTypes.string.isRequired,
+                title: PropTypes.string,
+                password: PropTypes.bool,
+                state: PropTypes.string,
             }),
             onSubmit: PropTypes.func.isRequired,
         };

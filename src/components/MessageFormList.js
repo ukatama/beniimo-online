@@ -19,7 +19,9 @@ const MessageFormList = (props) => {
     );
 };
 MessageFormList.propTypes = {
-    names: IPropTypes.orderedMap.isRequired,
+    names: IPropTypes.listOf(IPropTypes.contains({
+        id: PropTypes.string.isRequired,
+    })).isRequired,
 };
 
 export default pureRender(MessageFormList);

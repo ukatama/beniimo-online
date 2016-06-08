@@ -113,18 +113,19 @@ export function singleState(
     } = options;
 
     const displayName =
-        wrapperName(ComposedComponent, 'SingleStateMountWrapper');
+        wrapperName(ComposedComponent, 'SingleStateWrapper');
 
     const propTypesWithoutHandler = {
         ...ComposedComponent.propTypes,
-        onChange: undefined,
+        [key]: PropTypes.any,
+        onChange: PropTypes.any,
     };
     const propTypes = watchProps && propRequired ? {
             ...propTypesWithoutHandler,
             [key]: PropTypes.any.isRequired,
         } : propTypesWithoutHandler;
 
-    return class SingleStateMountWrapper extends Component {
+    return class SingleStateWrapper extends Component {
         static get displayName() {
             return displayName;
         }

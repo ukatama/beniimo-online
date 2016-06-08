@@ -50,7 +50,7 @@ const ChatDrawer = (props) => {
 ChatDrawer.propTypes = {
     open: PropTypes.bool.isRequired,
     room: IPropTypes.contains({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.string,
     }).isRequired,
     // eslint-disable-next-line react/sort-prop-types
     onRequestChange: PropTypes.func.isRequired,

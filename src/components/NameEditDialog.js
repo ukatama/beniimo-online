@@ -107,6 +107,7 @@ const NameEditDialog = (props) => {
     );
 };
 NameEditDialog.propTypes = {
+    open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     onUpdateName: PropTypes.func.isRequired,
     onUploadIcons: PropTypes.func.isRequired,
@@ -118,6 +119,5 @@ NameEditDialog.propTypes = {
         name: PropTypes.string,
         icon_id: PropTypes.string,
     }),
-    open: PropTypes.boolean,
 };
 export default pureRender(NameEditDialog);

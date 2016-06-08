@@ -156,7 +156,9 @@ class MessageListItem extends Component {
                 <div style={Style.ListItem.Timestamp}>
                     <Timestamp
                         horizontalPosition="left"
-                        timestamp={message.get('created')}
+                        timestamp={
+                            message.get('created') || message.get('timestamp')
+                        }
                     />
                 </div>
             </div>
