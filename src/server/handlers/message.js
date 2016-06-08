@@ -5,6 +5,7 @@ import {
     old,
     CREATE,
     FETCH,
+    IMAGE,
 } from '../../actions/message';
 import {generateId} from '../../utility/id';
 import {File} from '../models/file';
@@ -28,7 +29,12 @@ const processFile = (client, action) => {
 };
 
 export const message = (client) => (next) => (action) => {
-    switch (action.type) {
+    const {
+        type,
+        payload,
+    } = action;
+
+    switch (type) {
         case CREATE: {
             processFile(client, action)
                 .then(
@@ -64,6 +70,30 @@ export const message = (client) => (next) => (action) => {
                 .catch((e) => client.logger.error(e));
             break;
         }
+        case IMAGE:
+            File
+                .insert({
+                    id: generateId(),
+                    user_id: client.user.id || null,
+                    name: payload.file.name || null,
+                    type: payload.file.type || null,
+                    data: payload.file.file || null,
+                })
+                .then((file) => Message.insert({
+                    user_id: client.user.id || null,
+                    room_id: client.room.id || null,
+                    icon_id: payload.icon_id || null,
+                    name: payload.name || null,
+                    character_url: payload.character_url || null,
+                    message: JSON.stringify([]),
+                    file_id: file.id,
+                }))
+                .then((message) => {
+                    client.emit(create(message));
+                    client.publish(create(message));
+                    client.touch();
+                });
+            break;
         case FETCH:
             if (!action.payload) {
                 Message

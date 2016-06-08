@@ -27,3 +27,6 @@ export const list = createAction(LIST, (msgs) => msgs);
 
 export const OLD = 'MESSAGE_OLD';
 export const old = createAction(OLD, (msgs) => msgs);
+
+export const IMAGE = 'MESSAGE_IMAGE';
+export const image = createAction(IMAGE, (msg) => msg, sync);

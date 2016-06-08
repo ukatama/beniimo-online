@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
 import { pureRender } from '../utility/enhancer';
 
+const Style = {
+    maxWidth: '100%',
+    maxHeight: 600,
+};
+
 const MessageAttachedFile = (props) => {
     const {
         message,
@@ -11,7 +16,7 @@ const MessageAttachedFile = (props) => {
     if (!file_id) return null;
 
     return (
-        <img src={`/file/${file_id}`} />
+        <img src={`/file/${file_id}`} style={Style} />
     );
 };
 MessageAttachedFile.propTypes = {

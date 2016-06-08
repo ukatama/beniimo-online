@@ -8,6 +8,7 @@ import IPropTypes from 'react-immutable-proptypes';
 import MessageIcon from '../containers/MessageIcon';
 import { pureRender } from '../utility/enhancer';
 import { nameColor } from '../utility/color';
+import FileUploadButton from './FileUploadButton';
 import MessageFormInput from './MessageFormInput';
 
 const Style = {
@@ -39,6 +40,7 @@ class MessageForm extends Component {
             onRemoveName: PropTypes.func.isRequired,
             onSendMessage: PropTypes.func.isRequired,
             onTyping: PropTypes.func.isRequired,
+            onUploadImage: PropTypes.func.isRequired,
             state: PropTypes.string,
         };
     }
@@ -52,6 +54,7 @@ class MessageForm extends Component {
             onRemoveName,
             onSendMessage,
             onTyping,
+            onUploadImage,
         } = this.props;
 
         const onSubmit = (e) => {
@@ -121,6 +124,19 @@ class MessageForm extends Component {
                 <IconButton type="submit">
                     <Send />
                 </IconButton>
+                <FileUploadButton
+                    accept="image/*"
+                    name="image"
+                    tooltip="Post Image File"
+                    onChange={
+                        (e, files) => {
+                            if (files[0]) {
+                                onUploadImage(e, name.toJS(), files[0]);
+                                e.target.value = '';
+                            }
+                        }
+                    }
+                />
             </form>
         );
     }
