@@ -110,11 +110,11 @@ export class Connection {
             },
         });
     }
-    publish({ type, payload, meta }, whisper = false) {
+    publish({ type, payload, meta }, whisper_to = null) {
         if (!this.room_key) return;
 
-        const channel = whisper
-            ? `${this.room_key}:${this.user.id}`
+        const channel = whisper_to
+            ? `${this.room_key}:${whisper_to}`
             : this.room_key;
 
         this.redis.publish(channel, JSON.stringify({

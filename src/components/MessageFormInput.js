@@ -34,7 +34,14 @@ export default class MessageFormInput extends Component {
     }
 
     clear() {
-        this.value = '';
+        const value = this.value;
+
+        if (value && value.charAt(0) === '@') {
+            const index = value.indexOf(' ');
+            this.value = index > 0 ? value.substr(0, index + 1) : value;
+        } else {
+            this.value = '';
+        }
     }
 
     render() {
@@ -49,13 +56,11 @@ export default class MessageFormInput extends Component {
         const handleKeyDown = (e) => {
             if (e.key !== 'Enter' || e.shiftKey) return;
             e.preventDefault();
-
             onSubmit(e, value || null);
         };
 
         const handleChange = (e, value) => {
             this.value = value;
-
             if (!this.composition) onChange(e, value || null);
         };
 

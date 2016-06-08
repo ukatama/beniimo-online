@@ -57,7 +57,14 @@ class MessageForm extends Component {
         const onSubmit = (e) => {
             e.preventDefault();
 
-            const message = this.input.value || null;
+            const value = this.input.value || null;
+            if (!value) return;
+
+            const match = value.match(/^(@([^ ]+) )?((.|\r|\n)*?)$/);
+            if (!match) return;
+
+            const whisper_to = match[2] || null;
+            const message = match[3] || null;
             if (!message) return;
 
             onTyping(e, null);
@@ -66,13 +73,16 @@ class MessageForm extends Component {
                 character_url: name.get('character_url'),
                 icon_id: name.get('icon_id'),
                 message,
+                whisper_to,
             });
 
             this.input.clear();
         };
 
         const onChange = (e, value) => {
-            onTyping(e, name.get('name'), value);
+            if (value && value.charAt(0) !== '@') {
+                onTyping(e, name.get('name'), value);
+            }
         };
 
         const color = nameColor(name.get('name'));

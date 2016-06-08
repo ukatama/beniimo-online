@@ -92,7 +92,6 @@ class MessageListItem extends Component {
             }),
             typing: PropTypes.bool,
             onScroll: PropTypes.func.isRequired,
-            onWhisperTo: PropTypes.func.isRequired,
         };
     }
 
@@ -102,16 +101,10 @@ class MessageListItem extends Component {
         this.props.onScroll(element.offsetTop, element.offsetHeight);
     }
 
-    onWhisperTo(e, whisper_to) {
-        e.preventDefault();
-        this.props.onWhisperTo(whisper_to);
-    }
-
     render() {
         const {
             message,
             typing,
-            onWhisperTo,
         } = this.props;
         const {
             created,

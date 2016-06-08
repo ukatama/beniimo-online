@@ -69,7 +69,6 @@ class MessageList extends Component {
                 id: PropTypes.number.isRequired,
             })).isRequired,
             onFetchLog: PropTypes.func.isRequired,
-            onWhisperTo: PropTypes.func.isRequired,
         };
     }
 
@@ -122,7 +121,6 @@ class MessageList extends Component {
             typings,
             eor,
             messages,
-            onWhisperTo,
         } = this.props;
 
         return (
@@ -156,7 +154,6 @@ class MessageList extends Component {
                             key={typing.get('id')}
                             message={typing}
                             onScroll={(t, s) => this.scroll(t, s)}
-                            onWhisperTo={onWhisperTo}
                         />
                     ))
                 }

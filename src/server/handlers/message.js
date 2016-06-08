@@ -54,7 +54,7 @@ export const message = (client) => (next) => (action) => {
                 .then(({diceMessage, message}) => {
                     diceMessage.results.forEach((dice) => {
                         client.emit(roll(...dice));
-                        client.publish(roll(...dice));
+                        client.publish(roll(...dice), message.whisper_to);
                     });
 
                     client.emit(create(message));

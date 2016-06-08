@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import IPropTypes from 'react-immutable-proptypes';
+import MessageWhisperTo from './MessageWhisperTo';
 import { pureRender } from '../utility/enhancer';
 
 const MessageHeader = (props) => {
@@ -11,6 +12,7 @@ const MessageHeader = (props) => {
     return (
         <div style={{ color }}>
             {message.get('name')}@{message.get('user_id')}
+            <MessageWhisperTo message={message} />
         </div>
     );
 };
