@@ -3,10 +3,18 @@ import {createAction} from 'redux-actions';
 const sync = () => ({ sync: true });
 
 export const CREATE = 'MESSAGE_CREATE';
-export const create = createAction(CREATE, (msg) => msg, () => ({
-    sync: true,
-    sound: 'notice',
-}));
+export const create =
+    createAction(CREATE, (msg) => msg, ({ id, name, user_id, message }) => ({
+        sync: true,
+        sound: 'notice',
+        notify: id ? {
+            title: `${name}@${user_id}`,
+            body:
+                message.map(
+                    (nodes) => nodes.map(({ text }) => text).join('')
+                ).join(''),
+        } : null,
+    }));
 
 export const UPDATE = 'MESSAGE_UPDATE';
 export const update = createAction(UPDATE, (msg) => msg, sync);

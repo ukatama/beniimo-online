@@ -17,7 +17,7 @@ describe('reducers', () => {
         it('appends new message', () => {
             state = reducer(state, create({
                 name: 'n1',
-                message: 'no-id',
+                message: [[{ type: 'TEXT', text: 'no-id' }]],
                 user_id: 'u1',
             }));
             expect(state).isEmpty();
@@ -25,14 +25,14 @@ describe('reducers', () => {
             state = reducer(state, create({
                 id: 1,
                 name: 'n1',
-                message: 'msg1',
+                message: [[{ type: 'TEXT', text: 'msg1' }]],
                 user_id: 'u1',
             }));
             expect(state).toEqualImmutable(fromJS([
                 {
                     id: 1,
                     name: 'n1',
-                    message: 'msg1',
+                    message: [[{ type: 'TEXT', text: 'msg1' }]],
                     user_id: 'u1',
                 },
             ]));
@@ -47,7 +47,7 @@ describe('reducers', () => {
                 {
                     id: 1,
                     name: 'n1',
-                    message: 'msg1',
+                    message: [[{ type: 'TEXT', text: 'msg1' }]],
                     user_id: 'u1',
                 },
                 {
@@ -64,13 +64,13 @@ describe('reducers', () => {
                 {
                     id: 3,
                     name: 'n2',
-                    message: 'msg3',
+                    message: [[{ type: 'TEXT', text: 'msg3' }]],
                     user_id: 'u1',
                 },
                 {
                     id: 4,
                     name: 'n3',
-                    message: 'msg4',
+                    message: [[{ type: 'TEXT', text: 'msg4' }]],
                     user_id: 'u2',
                 },
             ]));
@@ -78,13 +78,13 @@ describe('reducers', () => {
                 {
                     id: 3,
                     name: 'n2',
-                    message: 'msg3',
+                    message: [[{ type: 'TEXT', text: 'msg3' }]],
                     user_id: 'u1',
                 },
                 {
                     id: 4,
                     name: 'n3',
-                    message: 'msg4',
+                    message: [[{ type: 'TEXT', text: 'msg4' }]],
                     user_id: 'u2',
                 },
             ]));
@@ -95,13 +95,13 @@ describe('reducers', () => {
                 {
                     id: 1,
                     name: 'n1',
-                    message: 'msg1',
+                    message: [[{ type: 'TEXT', text: 'msg1' }]],
                     user_id: 'u1',
                 },
                 {
                     id: 2,
                     name: 'n1',
-                    message: 'msg2',
+                    message: [[{ type: 'TEXT', text: 'msg2' }]],
                     user_id: 'u1',
                 },
             ]));
@@ -109,25 +109,25 @@ describe('reducers', () => {
                 {
                     id: 1,
                     name: 'n1',
-                    message: 'msg1',
+                    message: [[{ type: 'TEXT', text: 'msg1' }]],
                     user_id: 'u1',
                 },
                 {
                     id: 2,
                     name: 'n1',
-                    message: 'msg2',
+                    message: [[{ type: 'TEXT', text: 'msg2' }]],
                     user_id: 'u1',
                 },
                 {
                     id: 3,
                     name: 'n2',
-                    message: 'msg3',
+                    message: [[{ type: 'TEXT', text: 'msg3' }]],
                     user_id: 'u1',
                 },
                 {
                     id: 4,
                     name: 'n3',
-                    message: 'msg4',
+                    message: [[{ type: 'TEXT', text: 'msg4' }]],
                     user_id: 'u2',
                 },
             ]));
